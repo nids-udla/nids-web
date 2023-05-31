@@ -3,8 +3,14 @@ import requests
 import os
 
 # Create your views here.
+# ---------------------------------------------------
+#
+# Teyson:
+# Crear una def por cada url que lo necesite.
+#
+# ---------------------------------------------------
 def home(request):
-    return render(request, '/general/home.html', {
+    return render(request, 'gen-home.html', {
     })
 
 def team(request):
