@@ -25,4 +25,5 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("team/", views.team, name="team"),
+    path("profile/",views.perfil,name="profile")
     ]

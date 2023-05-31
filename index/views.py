@@ -17,3 +17,7 @@ def team(request):
     return render(request, 'team.html', {
         'team': team.text,
     })
+def perfil(request):
+    return render(request, 'team.html', {
+        'team': team.text,
+    })
