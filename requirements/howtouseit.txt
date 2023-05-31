@@ -1,0 +1,10 @@
+# Requirements.txt es uns de las formas que tiene Python para evitar
+# el típico problema de "funciona en mi máquina".
+#
+# Este consiste en un archivo con todos los modulos utilizados hasta el
+# momento de utilizar el comando `pip freeze`.
+#
+# Para hacer quedar al día con los modulos en su computador local debe correr
+# el siguiente comando `pip install -r requirements.txt`, con esto Python
+# procedera a instalar los modulos que requiere el projecto que esta manejando
+# ahora de forma local.
