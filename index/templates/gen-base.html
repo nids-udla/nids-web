@@ -1,7 +1,7 @@
 {% load static %}
 {% load static tailwind_tags %}
 
-<html>
+<html class="scroll-smooth scroll-pt-12">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,16 +21,8 @@
                   <img class="h-24 w-48" src="{% static 'img/extras/nids.png' %}" alt="nids logo">
               </a>
             </div>
-            <!-- Menu mobil -->
-            <div class="flex flex-1 justify-end md:hidden">
-              <a href="#stats" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Estadísticas<span aria-hidden="true"></span></a>
-              <a href="team" target=blank_ class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
-            </div>
-            <!-- Menu de escritorio -->
-            <div class="hidden md:flex md:flex-1 md:justify-end">
-              <a href="#stats" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Estadísticas<span aria-hidden="true"></span></a>
-              <a href="team" target=blank_ class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
-            </div>
+            <!-- Opciones dinámicas de la barra de navegación -->  
+            {{ opt|safe }}
         </nav>
     </header>
 
@@ -42,10 +34,13 @@
         {% block stats %}
         {% endblock %}
 
-        {% block smnews %}
+        {% block news %}
         {% endblock %}
 
         {% block team %}
+        {% endblock %}
+
+        {% block profile %}
         {% endblock %}
 
         {% block login %}
