@@ -27,7 +27,7 @@ def home(request):
             </div>
         '''
     return render(request, 'gen-home.html', {
-        'opt': nav
+        'opt': nav,
     })
 
 def team(request):
