@@ -25,6 +25,11 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("team/", views.team, name="team"),
-    path("login/",views.login,name="login")
+    path("profile/", views.profile, name="profile"),
+    path("login/", views.login, name="login"),
+    path("dashboard/<int:id>/profile",views.lgperfil,name='perfil'),
+    path("dashboard/<int:id>/myteam", views.myteam, name='myteam'),
+    path("dashboard/<int:id>/proyects", views.proyects, name='proyects'),
+    path("dashboard/<int:id>/proyects/tasks", views.tasks, name='tasks'),   
 
     ]
