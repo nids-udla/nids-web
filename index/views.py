@@ -1,16 +1,9 @@
 from django.shortcuts import render
-import requests
-import os
+from django.views import View
 
-# Create your views here.
-# ---------------------------------------------------
-#
-# Teyson:
-# Crear una def por cada url que lo necesite.
-#
-# ---------------------------------------------------
-def home(request):
-    nav = ''' 
+class HomeView(View):
+    def get(self, request):
+        nav = ''' 
             <!-- Menu -->
             <div class="flex flex-1 justify-end">
             <a href="#stats" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Estadísticas<span aria-hidden="true"></span></a>
@@ -19,25 +12,27 @@ def home(request):
             <a href="/login" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
             </div>
         '''
-    return render(request, 'gen-home.html', {
-        'opt': nav,
-    })
+        return render(request, 'gen-home.html', {
+            'opt': nav,
+        })
 
-def team(request):
-    nav = '''
+class TeamView(View):
+    def get(self, request):
+        nav = '''
             <!-- Menu mobil -->
             <div class="flex flex-1 justify-end">
             <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
             <a href="/login" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
             </div>
         '''
-    return render(request, 'equ-team.html', {
-        'currenturl': 'team',
-        'opt': nav,
-    })
+        return render(request, 'equ-team.html', {
+            'currenturl': 'team',
+            'opt': nav,
+        })
 
-def profile(request):
-    nav = '''
+class ProfileView(View):
+    def get(self, request):
+        nav = '''
         <!-- Menu mobil -->
         <div class="flex flex-1 justify-end">
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
@@ -45,18 +40,19 @@ def profile(request):
         <a href="/login" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
         </div>
     '''
-    return render(request, 'equ-profile.html', {
-        'opt': nav
-    })
+        return render(request, 'equ-profile.html', {
+            'opt': nav
+        })
 
-def login(request):
-    nav = '''
+class LoginView(View):
+    def get(self, request):
+        nav = '''
         <!-- Menu mobil -->
         <div class="flex flex-1 justify-end">
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
         <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
         </div>
     '''
-    return render(request, 'usu-login.html', {
-        'opt': nav,
-    })
+        return render(request, 'usu-login.html', {
+            'opt': nav,
+        })
