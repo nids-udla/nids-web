@@ -27,9 +27,10 @@ urlpatterns = [
     path("team/", views.team, name="team"),
     path("profile/", views.profile, name="profile"),
     path("login/", views.login, name="login"),
-    path("dashboard/<int:id>/profile",views.lgperfil,name='perfil'),
-    path("dashboard/<int:id>/myteam", views.myteam, name='myteam'),
-    path("dashboard/<int:id>/proyects", views.proyects, name='proyects'),
-    path("dashboard/<int:id>/proyects/tasks", views.tasks, name='tasks'),   
+    path("news/", views.news, name='noticias'), 
+    path("dashboard/<int:id>/profile/",views.lgperfil,name='perfil'),
+    path("dashboard/<int:id>/myteam/", views.myteam, name='myteam'),
+    path("dashboard/<int:id>/proyects/", views.proyects, name='proyects'),
+    path("dashboard/<int:id>/proyects/tasks/", views.tasks, name='tasks')
 
     ]

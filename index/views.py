@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Proyecto,Tarea,Funcion,Usuario
+from .models import Proyecto,Tarea,Funcion,Usuario,Noticia
 
 # Create your views here.
 # ---------------------------------------------------
@@ -38,6 +38,12 @@ def login(request):
     return render(request, 'usu-login.html', {
         'opt': nav,
     })
+def news(request):
+    news:Noticia.objects.all()
+    return render(request, "equ-news.html",{
+        'noticias':news
+    })
+
 def profile(request):
     profile=Usuario.objects.all()
     return render(request, 'equ-profile.html',{
