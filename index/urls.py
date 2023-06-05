@@ -20,11 +20,12 @@
 # ---------------------------------------------------
 
 from django.urls import path
-from .views import HomeView, TeamView, ProfileView, LoginView
+from .views import HomeView, TeamView, ProfileView, LoginView, RegisterView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('team/', TeamView.as_view(), name='team'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('login/', LoginView.as_view(), name='login'),
+    path('register/', RegisterView.as_view(), name='register'),
 ]

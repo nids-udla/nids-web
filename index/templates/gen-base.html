@@ -24,7 +24,7 @@
             <!-- Opciones dinámicas de la barra de navegación -->  
             {{ opt|safe }}
         </nav>
-        {% if user.is_authenticated %}
+        {% if request.session.is_validated %}
         <div class="flex items-center justify-between gap-x-6 bg-gray-900 py-2.5 px-6 sm:pr-3.5 lg:pl-8">
           <p class="text-sm leading-6 text-white pl-5">
             This banner is visible because  <i class="text-green-600"> {{ user.first_name }} </i> is online! You can navigate trought the <i>"Search"</i> section now.
@@ -51,6 +51,9 @@
         {% endblock %}
 
         {% block login %}
+        {% endblock %}
+
+        {% block register %}
         {% endblock %}
 
     </body>
