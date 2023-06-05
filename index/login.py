@@ -1,6 +1,10 @@
 import bcrypt
 from .models import Usuario
 
+def encrypt(*args):
+    encrypted = bcrypt.hashpw(args, bcrypt.gensalt())
+    return encrypted
+
 def verify(**kwargs):
     input_email = kwargs.get('email')
     input_password = kwargs.get('password')
