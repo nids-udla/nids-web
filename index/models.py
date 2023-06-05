@@ -18,6 +18,15 @@ from django.db import models
 #   Graduado
 #   Asignado
 # -------------------------------------------
+class Usuario(models.Model):
+    nombre_completo = models.CharField(max_length=100)
+    email = models.EmailField(max_length=254, default="none")
+    password = models.CharField(max_length=300)
+    descripcion = models.CharField(max_length=100)
+    linkedin = models.URLField(blank=True)
+    github = models.URLField(blank=True)
+    extra_rrss = models.URLField(blank=True)
+
 class Estadisticas(models.Model):
     titulo = models.CharField(max_length=100)
     valor = models.IntegerField()
@@ -44,16 +53,6 @@ class Noticia(models.Model):
     titulo = models.CharField(max_length=100)
     palabra_clave = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=300)
-
-class Usuario(models.Model):
-    nombre_completo = models.CharField(max_length=100)
-    email = models.EmailField(max_length=254, default="none")
-    password = models.CharField(max_length=20)
-    descripcion = models.CharField(max_length=100)
-    linkedin = models.URLField(blank=True)
-    github = models.URLField(blank=True)
-    extra_rrss = models.URLField(blank=True)
-    codigo = models.CharField(max_length=8)
 
 # -------------------------------------------
 
