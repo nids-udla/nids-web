@@ -1,6 +1,3 @@
-from django.urls import path, include
-from . import views
-
 # ---------------------------------------------------
 #
 # Teyson:
@@ -22,8 +19,12 @@ from . import views
 #
 # ---------------------------------------------------
 
+from django.urls import path
+from .views import HomeView, TeamView, ProfileView, LoginView
+
 urlpatterns = [
-    path("", views.home, name="home"),
-    path("team/", views.team, name="team"),
-    path("profile/",views.perfil,name="profile")
-    ]
+    path('', HomeView.as_view(), name='home'),
+    path('team/', TeamView.as_view(), name='team'),
+    path('profile/', ProfileView.as_view(), name='profile'),
+    path('login/', LoginView.as_view(), name='login'),
+]
