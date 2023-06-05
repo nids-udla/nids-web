@@ -1,15 +1,14 @@
-from django.shortcuts import render
-from .models import Proyecto,Tarea,Funcion,Usuario,Noticia
+from typing import Any
+from django import http
+from django.shortcuts import redirect, render
+from django.views import View
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as login_process
+from django.contrib.auth import logout as logout_process
 
-# Create your views here.
-# ---------------------------------------------------
-#
-# Teyson:
-# Crear una def por cada url que lo necesite.
-#
-# ---------------------------------------------------
-def home(request):
-    nav = ''' 
+class HomeView(View):
+    def get(self, request):
+        nav = ''' 
             <!-- Menu -->
             <div class="flex flex-1 justify-end">
             <a href="#stats" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Estadísticas<span aria-hidden="true"></span></a>
@@ -18,54 +17,81 @@ def home(request):
             <a href="/login" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
             </div>
         '''
-    return render(request, 'gen-home.html', {
-})
+        return render(request, 'gen-home.html', {
+            'opt': nav,
+        })
 
-def team(request):
-    return render(request, 'not-team.html', {
-        'team': team.text,
-    })
-        
+class TeamView(View):
+    def get(self, request):
+        nav = '''
+            <!-- Menu mobil -->
+            <div class="flex flex-1 justify-end">
+            <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
+            <a href="/login" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
+            </div>
+        '''
+        return render(request, 'equ-team.html', {
+            'currenturl': 'team',
+            'opt': nav,
+        })
 
-def login(request):
-    nav = '''
+class ProfileView(View):
+    def get(self, request):
+        nav = '''
         <!-- Menu mobil -->
         <div class="flex flex-1 justify-end">
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
         <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
+        <a href="/login" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
         </div>
     '''
-    return render(request, 'usu-login.html', {
-        'opt': nav,
-    })
-def news(request):
-    news:Noticia.objects.all()
-    return render(request, "equ-news.html",{
-        'noticias':news
-    })
+        return render(request, 'equ-profile.html', {
+            'opt': nav
+        })
 
-def profile(request):
-    profile=Usuario.objects.all()
-    return render(request, 'equ-profile.html',{
-        "profile": profile 
-    })
-def lgperfil(request):
-    lgperfil=Usuario.objects.all()
-    return render(request, 'usu-perfil.html',{
-        "perfil": lgperfil
-    })
-def myteam(request):
-    myteam=Funcion.objects.all()
-    return render(request, 'usu-myteam.html',{
-        "myteam": myteam
-    })
-def proyects(request):
-    proyects=Proyecto.objects.all()
-    return render(request, 'usu-proyects.html',{
-        'proyectos': proyects
-    })
-def tasks(request):
-    tasks=Tarea.objects.all()
-    return render(request, 'usu-tareas.html', {
-        'tareas': tasks
-    })
+class LoginView(View):
+    nav = '''
+            <!-- Menu mobil -->
+            <div class="flex flex-1 justify-end">
+            <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
+            <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
+            </div>
+        '''
+    
+    def get(self, request):
+        return render(request, 'usu-login.html', {
+            'opt': self.nav,
+        })
+    
+    def post(self, request):
+
+        print("Llamado correctamente!")
+
+        email = request.POST['email']
+        print("1) {}".format(email))
+        password = request.POST['password']
+        print("2) {}".format(password))
+        user = authenticate(username=email, password=password)
+
+        if user:
+            login_process(request, user)
+
+            print('autenticado')
+
+            return redirect('/', {
+            'opt': self.nav,
+        })
+        else:
+            print('no autenticado')
+
+            return redirect('/', {
+            'opt': self.nav,
+        })
+    
+    def logout(self, request):
+
+        logout_process(request)
+
+        return render(request, 'gen-home.html', {
+            'opt': self.nav,
+        })
