@@ -45,18 +45,17 @@ class Noticia(models.Model):
     palabra_clave = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=300)
 
-# -------------------------------------------
-
 class Usuario(models.Model):
-    nombre_1 = models.CharField(max_length=100)
-    nombre_2 = models.CharField(max_length=100)
-    apellido_1 = models.CharField(max_length=100)
-    apellido_2 = models.CharField(max_length=100)
+    nombre_completo = models.CharField(max_length=100)
+    email = models.EmailField(max_length=254, default="none")
+    password = models.CharField(max_length=20)
     descripcion = models.CharField(max_length=100)
-    linkedin = models.URLField()
-    github = models.URLField()
-    extra_rrss = models.URLField()
+    linkedin = models.URLField(blank=True)
+    github = models.URLField(blank=True)
+    extra_rrss = models.URLField(blank=True)
     codigo = models.CharField(max_length=8)
+
+# -------------------------------------------
 
 class Autor(models.Model):
     id_usuario = models.ForeignKey('Usuario', on_delete=models.CASCADE)
