@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from .login import verify
+from .login import verify, encrypt
+from .models import Usuario
 
 class HomeView(View):
     nav = ''' 
@@ -98,3 +99,26 @@ class RegisterView(View):
         return render(request, 'usu-register.html', {
             'opt': self.nav,
         })
+    
+    def post(self, request):
+        nombre_completo = request.POST['nombre_completo']
+        email = request.POST['email']
+        password = request.POST['password']
+        descripcion = request.POST['descripcion']
+        red_social_A = request.POST['red_social_A']
+        red_social_B = request.POST['red_social_B']
+        red_social_C = request.POST['red_social_C']
+
+        pw = encrypt(password)
+
+        newUser = Usuario.objects.create(
+            nombre_completo=nombre_completo,
+            email=email,
+            password=pw,
+            descripcion=descripcion,
+            red_social_A=red_social_A,
+            red_social_B=red_social_B,
+            red_social_C=red_social_C,
+            )
+
+        return render(request, 'home.html')
