@@ -2,6 +2,13 @@
 {% load static %}
 
 {% block register %}
+{% if messages %}
+<div class="flex items-center justify-between gap-x-6 bg-red-400 py-2.5 px-6 sm:pr-3.5 lg:pl-8">
+  <p class="text-sm leading-6 text-white pl-5">
+    Este usuario ya existe, si existe algún problema con la contraseña puede probar cambiandola. Si el problema es con el correo cualquier profesor puede actualizarlo desde su cuenta personal.
+  </p>
+</div>
+{% endif %}
 <form class="space-y-6 px-12 h-full" action="." method="POST">
   {% csrf_token %}
   <div class="my-12 ">

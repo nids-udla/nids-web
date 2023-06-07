@@ -4,12 +4,10 @@ from .models import Usuario
 def verify(email):
     find = Usuario.objects.get(email=email)
 
-    print("!!!!!!!!!!! --->".format(find))
-
     if find is not None:
-        return False
-    else:
         return True
+    else:
+        return False
 
 def encrypt(pw):
     hasher = hashlib.sha256()
@@ -19,10 +17,7 @@ def encrypt(pw):
 
 def validate(email, password):
     input_email = email
-    user = Usuario.objects.filter(email=input_email)
-
-    print("!!!!!!!!!!!EMAIL RECIBIDO --->".format(input_email))
-    print("!!!!!!!!!!!USUARIO ENCONTRADO --->".format(input_email))
+    user = Usuario.objects.get(email=input_email)
 
     if user:
         input_password = encrypt(password)
@@ -31,7 +26,7 @@ def validate(email, password):
         if db_password == input_password:
             return True
         else:
-            return None
+            return False
     else:
         return None
     

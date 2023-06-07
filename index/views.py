@@ -8,12 +8,10 @@ from django.contrib import messages
 class HomeView(View):
     nav = ''' 
         <!-- Menu -->
-        <div class="flex flex-1 justify-end">
         <a href="#stats" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Estadísticas<span aria-hidden="true"></span></a>
         <a href="#news" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Noticias<span aria-hidden="true"></span></a>
         <a href="/team" target=blank_ class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
         <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
-        </div>
     '''
 
     def get(self, request):
@@ -24,10 +22,8 @@ class HomeView(View):
 class TeamView(View):
     nav = '''
         <!-- Menu mobil -->
-        <div class="flex flex-1 justify-end">
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
         <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
-        </div>
     '''
 
     def get(self, request):
@@ -38,11 +34,9 @@ class TeamView(View):
 class ProfileView(View):
     nav = '''
         <!-- Menu mobil -->
-        <div class="flex flex-1 justify-end">
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
         <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
         <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
-        </div>
     '''
 
     def get(self, request):
@@ -52,12 +46,10 @@ class ProfileView(View):
 
 class LoginView(View):
     nav = '''
-            <!-- Menu mobil -->
-            <div class="flex flex-1 justify-end">
-            <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
-            <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
-            </div>
-        '''
+        <!-- Menu mobil -->
+        <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
+        <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
+    '''
     
     def get(self, request):
         return render(request, 'usu-login.html', {
@@ -65,42 +57,35 @@ class LoginView(View):
         })
     
     def post(self, request):
-        data = request.POST.get('email')
-        print("!!!!!!!!!!!DATA --- >".format(data))
-        return redirect('/')
-        # email = request.POST['email']
-        # password = request.POST['password']
+        email = request.POST['email']
+        password = request.POST['password']
+        checking = validate(email, password)
 
-        # print("!!!!!!!!!!!DATA --- >".format(data))
-        # print("!!!!!!!!!!!EMAIL --- >".format(email))
-        # print("!!!!!!!!!!!PASSWORD --->".format(password))
+        if checking is True:
+            request.session['is_validated'] = True
 
-        # checking = validate(email=email, password=password)
+            return redirect('/', {
+            'opt': self.nav,
+        })
+        else:
+            print('no autenticado')
 
-        # if checking is True:
-        #     request.session['is_validated'] = True
+            return redirect('/login', {
+            'opt': self.nav,
+        })
 
-        #     return redirect('/', {
-        #     'opt': self.nav,
-        # })
-        # else:
-        #     print('no autenticado')
+class LogoutView(View):
 
-        #     return redirect('/login', {
-        #     'opt': self.nav,
-        # })
-
-    def delete(self, request):
-        request.session['is_validated'] = False
+    def post(self, request):
+        del request.session['is_validated']
+        return redirect("home")
     
 class RegisterView(View):
     nav = '''
         <!-- Menu mobil -->
-        <div class="flex flex-1 justify-end">
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
         <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
         <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
-        </div>
     '''
 
     def get(self, request):
@@ -114,7 +99,7 @@ class RegisterView(View):
 
         if is_here is True:
             messages.add_message(request, messages.ERROR, 'Este usuario ya existe!')
-            return redirect('/register')
+            return redirect('register')
         else:
             nombre_completo = request.POST['nombre_completo']
             password = request.POST['password']
