@@ -1,7 +1,9 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from .login import verify, encrypt
+from .login import validate, encrypt, verify
 from .models import Usuario
+from django.contrib import messages
+
 
 class HomeView(View):
     nav = ''' 
@@ -63,27 +65,33 @@ class LoginView(View):
         })
     
     def post(self, request):
-        print("Llamado correctamente!")
+        data = request.POST.get('email')
+        print("!!!!!!!!!!!DATA --- >".format(data))
+        return redirect('/')
+        # email = request.POST['email']
+        # password = request.POST['password']
 
-        email = request.POST['email']
-        password = request.POST['password']
-        checking = verify(email=email, password=password)
+        # print("!!!!!!!!!!!DATA --- >".format(data))
+        # print("!!!!!!!!!!!EMAIL --- >".format(email))
+        # print("!!!!!!!!!!!PASSWORD --->".format(password))
 
-        print("1) {}".format(email))
-        print("2) {}".format(password))
+        # checking = validate(email=email, password=password)
 
-        if checking is True:
-            request.session['is_validated'] = True
+        # if checking is True:
+        #     request.session['is_validated'] = True
 
-            return redirect('/', {
-            'opt': self.nav,
-        })
-        else:
-            print('no autenticado')
+        #     return redirect('/', {
+        #     'opt': self.nav,
+        # })
+        # else:
+        #     print('no autenticado')
 
-            return redirect('/login', {
-            'opt': self.nav,
-        })
+        #     return redirect('/login', {
+        #     'opt': self.nav,
+        # })
+
+    def delete(self, request):
+        request.session['is_validated'] = False
     
 class RegisterView(View):
     nav = '''
@@ -101,24 +109,30 @@ class RegisterView(View):
         })
     
     def post(self, request):
-        nombre_completo = request.POST['nombre_completo']
         email = request.POST['email']
-        password = request.POST['password']
-        descripcion = request.POST['descripcion']
-        red_social_A = request.POST['red_social_A']
-        red_social_B = request.POST['red_social_B']
-        red_social_C = request.POST['red_social_C']
+        is_here = verify(email)
 
-        pw = encrypt(password)
+        if is_here is True:
+            messages.add_message(request, messages.ERROR, 'Este usuario ya existe!')
+            return redirect('/register')
+        else:
+            nombre_completo = request.POST['nombre_completo']
+            password = request.POST['password']
+            # descripcion = request.POST['descripcion']
+            # red_social_A = request.POST['red_social_A']
+            # red_social_B = request.POST['red_social_B']
+            # red_social_C = request.POST['red_social_C']
 
-        newUser = Usuario.objects.create(
-            nombre_completo=nombre_completo,
-            email=email,
-            password=pw,
-            descripcion=descripcion,
-            red_social_A=red_social_A,
-            red_social_B=red_social_B,
-            red_social_C=red_social_C,
-            )
+            pw = encrypt(password)
 
-        return render(request, 'home.html')
+            Usuario.objects.create(
+                nombre_completo=nombre_completo,
+                email=email,
+                password=pw,
+                # descripcion=descripcion,
+                # red_social_A=red_social_A,
+                # red_social_B=red_social_B,
+                # red_social_C=red_social_C,
+                )
+
+            return redirect('/')
