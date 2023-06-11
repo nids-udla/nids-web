@@ -1,17 +1,17 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from .login import verify, encrypt
+from .login import validate, encrypt, verify
 from .models import Usuario
+from django.contrib import messages
+
 
 class HomeView(View):
     nav = ''' 
         <!-- Menu -->
-        <div class="flex flex-1 justify-end">
         <a href="#stats" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Estadísticas<span aria-hidden="true"></span></a>
         <a href="#news" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Noticias<span aria-hidden="true"></span></a>
         <a href="/team" target=blank_ class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
         <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
-        </div>
     '''
 
     def get(self, request):
@@ -22,10 +22,8 @@ class HomeView(View):
 class TeamView(View):
     nav = '''
         <!-- Menu mobil -->
-        <div class="flex flex-1 justify-end">
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
         <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
-        </div>
     '''
 
     def get(self, request):
@@ -36,11 +34,9 @@ class TeamView(View):
 class ProfileView(View):
     nav = '''
         <!-- Menu mobil -->
-        <div class="flex flex-1 justify-end">
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
         <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
         <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
-        </div>
     '''
 
     def get(self, request):
@@ -50,12 +46,10 @@ class ProfileView(View):
 
 class LoginView(View):
     nav = '''
-            <!-- Menu mobil -->
-            <div class="flex flex-1 justify-end">
-            <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
-            <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
-            </div>
-        '''
+        <!-- Menu mobil -->
+        <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
+        <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
+    '''
     
     def get(self, request):
         return render(request, 'usu-login.html', {
@@ -63,14 +57,9 @@ class LoginView(View):
         })
     
     def post(self, request):
-        print("Llamado correctamente!")
-
         email = request.POST['email']
         password = request.POST['password']
-        checking = verify(email=email, password=password)
-
-        print("1) {}".format(email))
-        print("2) {}".format(password))
+        checking = validate(email, password)
 
         if checking is True:
             request.session['is_validated'] = True
@@ -84,15 +73,19 @@ class LoginView(View):
             return redirect('/login', {
             'opt': self.nav,
         })
+
+class LogoutView(View):
+
+    def post(self, request):
+        del request.session['is_validated']
+        return redirect("home")
     
 class RegisterView(View):
     nav = '''
         <!-- Menu mobil -->
-        <div class="flex flex-1 justify-end">
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
         <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
         <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
-        </div>
     '''
 
     def get(self, request):
@@ -101,24 +94,30 @@ class RegisterView(View):
         })
     
     def post(self, request):
-        nombre_completo = request.POST['nombre_completo']
         email = request.POST['email']
-        password = request.POST['password']
-        descripcion = request.POST['descripcion']
-        red_social_A = request.POST['red_social_A']
-        red_social_B = request.POST['red_social_B']
-        red_social_C = request.POST['red_social_C']
+        is_here = verify(email)
 
-        pw = encrypt(password)
+        if is_here is True:
+            messages.add_message(request, messages.ERROR, 'Este usuario ya existe!')
+            return redirect('register')
+        else:
+            nombre_completo = request.POST['nombre_completo']
+            password = request.POST['password']
+            # descripcion = request.POST['descripcion']
+            # red_social_A = request.POST['red_social_A']
+            # red_social_B = request.POST['red_social_B']
+            # red_social_C = request.POST['red_social_C']
 
-        newUser = Usuario.objects.create(
-            nombre_completo=nombre_completo,
-            email=email,
-            password=pw,
-            descripcion=descripcion,
-            red_social_A=red_social_A,
-            red_social_B=red_social_B,
-            red_social_C=red_social_C,
-            )
+            pw = encrypt(password)
 
-        return render(request, 'home.html')
+            Usuario.objects.create(
+                nombre_completo=nombre_completo,
+                email=email,
+                password=pw,
+                # descripcion=descripcion,
+                # red_social_A=red_social_A,
+                # red_social_B=red_social_B,
+                # red_social_C=red_social_C,
+                )
+
+            return redirect('/')
