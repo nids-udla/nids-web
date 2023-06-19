@@ -121,3 +121,19 @@ class RegisterView(View):
                 )
 
             return redirect('/')
+
+class DashboardView(View):
+    nav = ''' 
+        <!-- Menu -->
+        <a href="#stats" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Estadísticas<span aria-hidden="true"></span></a>
+        <a href="#news" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Noticias<span aria-hidden="true"></span></a>
+        <a href="/team" target=blank_ class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
+    '''
+
+    def get(self, request):
+        token = request.session.get('is_validated', 'False')
+
+        if token == True:
+            return render(request, 'usu-dashboard.html', {})
+        else:
+            return redirect('home')
