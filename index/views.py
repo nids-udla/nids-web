@@ -12,6 +12,7 @@ class HomeView(View):
         <a href="#news" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Noticias<span aria-hidden="true"></span></a>
         <a href="/team" target=blank_ class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
         <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
+
     '''
 
     def get(self, request):
@@ -23,7 +24,6 @@ class TeamView(View):
     nav = '''
         <!-- Menu mobil -->
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
-        <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
     '''
 
     def get(self, request):
@@ -36,13 +36,14 @@ class ProfileView(View):
         <!-- Menu mobil -->
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
         <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
-        <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
     '''
 
     def get(self, request):
         return render(request, 'equ-profile.html', {
             'opt': self.nav
         })
+
+# Falta agregar una clase para el detalle de la noticia.
 
 class LoginView(View):
     nav = '''
@@ -77,7 +78,7 @@ class LoginView(View):
 class LogoutView(View):
 
     def post(self, request):
-        del request.session['is_validated']
+        request.session['is_validated'] = False
         return redirect("home")
     
 class RegisterView(View):
@@ -85,7 +86,6 @@ class RegisterView(View):
         <!-- Menu mobil -->
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
         <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
-        <a href="/login/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Log In<span aria-hidden="true"></span></a>
     '''
 
     def get(self, request):

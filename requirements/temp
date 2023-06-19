@@ -1,0 +1,61 @@
+-- Mock data for Usuario model
+INSERT INTO index_usuario (nombre_completo, email, password, descripcion, linkedin, github, extra_rrss)
+VALUES ('John Doe', 'john.doe@example.com', 'mypassword', 'Lorem ipsum dolor sit amet.', 'https://www.linkedin.com/johndoe', 'https://github.com/johndoe', 'https://example.com/johndoe');
+INSERT INTO index_usuario (nombre_completo, email, password, descripcion, linkedin, github, extra_rrss)
+VALUES ('Jane Smith', 'jane.smith@example.com', 'anotherpassword', 'Lorem ipsum dolor sit amet.', 'https://www.linkedin.com/janesmith', 'https://github.com/janesmith', 'https://example.com/janesmith');
+-- Mock data for Estadisticas model
+INSERT INTO index_estadisticas (titulo, valor)
+VALUES ('Visitors', 1000);
+INSERT INTO index_estadisticas (titulo, valor)
+VALUES ('Sales', 500);
+-- Mock data for Tarea model
+INSERT INTO index_tarea (titulo, descripcion)
+VALUES ('Task 1', 'Lorem ipsum dolor sit amet.');
+INSERT INTO index_tarea (titulo, descripcion)
+VALUES ('Task 2', 'Lorem ipsum dolor sit amet.');
+-- Mock data for Rol model
+INSERT INTO index_rol (nombre)
+VALUES ('Admin');
+INSERT INTO index_rol (nombre)
+VALUES ('User');
+-- Mock data for Diploma model
+INSERT INTO index_diploma (nombre, tipo)
+VALUES ('Bachelor', 'Science');
+INSERT INTO index_diploma (nombre, tipo)
+VALUES ('Master', 'Arts');
+-- Mock data for Area model
+INSERT INTO index_area (nombre)
+VALUES ('Technology');
+INSERT INTO index_area (nombre)
+VALUES ('Marketing');
+-- Mock data for Proyecto model
+INSERT INTO index_proyecto (titulo, descripcion)
+VALUES ('Project 1', 'Lorem ipsum dolor sit amet.');
+INSERT INTO index_proyecto (titulo, descripcion)
+VALUES ('Project 2', 'Lorem ipsum dolor sit amet.');
+-- Mock data for Noticia model
+INSERT INTO index_noticia (titulo, palabra_clave, descripcion)
+VALUES ('News 1', 'Lorem', 'Lorem ipsum dolor sit amet.');
+INSERT INTO index_noticia (titulo, palabra_clave, descripcion)
+VALUES ('News 2', 'Ipsum', 'Lorem ipsum dolor sit amet.');
+-- Mock data for related models
+INSERT INTO index_autor (id_usuario_id, id_noticia_id)
+VALUES (1, 1);
+INSERT INTO index_autor (id_usuario_id, id_noticia_id)
+VALUES (2, 2);
+INSERT INTO index_investigacion (id_usuario_id, id_area_id)
+VALUES (1, 1);
+INSERT INTO index_investigacion (id_usuario_id, id_area_id)
+VALUES (2, 2);
+INSERT INTO index_funcion (id_usuario_id, id_rol_id)
+VALUES (1, 1);
+INSERT INTO index_funcion (id_usuario_id, id_rol_id)
+VALUES (2, 2);
+INSERT INTO index_graduado (id_usuario_id, id_diploma_id)
+VALUES (1, 1);
+INSERT INTO index_graduado (id_usuario_id, id_diploma_id)
+VALUES (2, 2);
+INSERT INTO index_asignado (id_usuario_id, id_proyecto_id, id_tarea_id)
+VALUES (1, 1, 1);
+INSERT INTO index_asignado (id_usuario_id, id_proyecto_id, id_tarea_id)
+VALUES (2, 2, 2);

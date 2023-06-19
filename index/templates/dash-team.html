@@ -1,0 +1,44 @@
+{% extends 'gen-base.html' %}
+{% load static %}
+
+{% block dash-team-as %}
+<body>
+    <div class="flex pb-24 h-screen">
+      <div class="bg-gray-100 pt-6 px-8 flex-col">
+        <!-- dashboard profile -->
+        <ul class="flex items-center flex-col py-4">
+          <li class="flex justify-between">
+            <img class="h-24 rounded-lg rounded-md hover:bg-orange-600" src="as teyson.png" alt="">
+          </li>
+          <li class="flex text-center justify-between">
+              <a class="hover:bg-orange-600" href="panel.html">Proyectos </a>         
+          </li>
+        </ul>
+    
+        <!-- dashboard proyects -->      
+        <ul class="flex items-center flex-col py-8">
+          <li class="flex items-center justify-between">
+            <img class="h-24 rounded-lg rounded-md hover:bg-orange-600" src="lista.png" alt="">
+          </li>
+          <li class="flex text-center justify-between">
+            <a class="hover:bg-orange-600" href="proyectos.html">Proyectos </a>           
+          </li>
+        </ul>
+    
+        <!-- dashboard team -->
+        <ul class="flex items-center flex-col py-4">
+          <li class="flex items-center justify-between">
+            <img class="h-24 rounded-lg rounded-md hover:bg-orange-600" src="reclutamiento.png" alt="">
+          </li>
+          <li class="flex text-center justify-between">
+            <h2 class="hover:text-orange-600">Team</h2>            
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+  </body>
+
+
+
+{% endblock %}
