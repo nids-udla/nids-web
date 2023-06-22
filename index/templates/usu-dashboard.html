@@ -3,6 +3,7 @@
 
 {% block dashboard %}
 <body>
+  
   <div class="flex pb-24 h-screen">
     <div class="bg-gray-100 pt-6 px-8 flex-col">
       <!-- dashboard profile -->
@@ -10,9 +11,10 @@
         <li class="flex justify-between">
           <img class="h-24 rounded-lg rounded-md hover:bg-orange-600" src="as teyson.png" alt="">
         </li>
-        <li class="flex text-center justify-between">
-          <h2 class="hover:text-orange-600">Teyson Montoya</h2>            
-        </li>
+          <li class="flex text-center justify-between">
+            <h2 class="hover:text-orange-600">{{ nombreusuario }}</h2>            
+          </li>
+      
       </ul>
   
       <!-- dashboard proyects -->      
