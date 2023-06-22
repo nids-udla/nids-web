@@ -11,9 +11,13 @@
         <li class="flex justify-between">
           <img class="h-24 rounded-lg rounded-md hover:bg-orange-600" src="as teyson.png" alt="">
         </li>
+          {% for usuario in usuarios %}
           <li class="flex text-center justify-between">
-            <h2 class="hover:text-orange-600">{{ nombreusuario }}</h2>            
+            <h2 class="hover:text-orange-600">
+              {{ usuario.nombre_completo }}
+            </h2>
           </li>
+          {% endfor %}
       
       </ul>
   
