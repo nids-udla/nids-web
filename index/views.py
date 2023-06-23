@@ -128,15 +128,20 @@ class DashboardView(View):
     def get(self, request):
         token = request.session.get('is_validated', 'False')
 
-        if token == True:
-            usuarios = Usuario.objects.all()
-            uservalid = Usuario.objects.get(id=request.user.id)
-            nombreusuario = uservalid.nombre_completo            
-            return render(request, 'usu-dashboard.html', {
-                "nombreusuario":nombreusuario,
-                "usuarios":usuarios})
+        if token == True:           
+            return render(request, 'usu-dashboard.html', {})
         else:
             return redirect('home')
+
+        # if token == True:
+        #     usuarios = Usuario.objects.all()
+        #     uservalid = Usuario.objects.get(id=request.user.id)
+        #     nombreusuario = uservalid.nombre_completo            
+        #     return render(request, 'usu-dashboard.html', {
+        #         "nombreusuario":nombreusuario,
+        #         "usuarios":usuarios})
+        # else:
+        #     return redirect('home')
         
     
     

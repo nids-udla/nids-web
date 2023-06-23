@@ -6,35 +6,30 @@
   
   <div class="flex pb-24 h-screen">
     <div class="bg-gray-100 pt-6 px-8 flex-col">
-      <!-- dashboard profile -->
+      <!-- Profile button -->
       <ul class="flex items-center flex-col py-4">
         <li class="flex justify-between">
-          <img class="h-24 rounded-lg rounded-md hover:bg-orange-600" src="as teyson.png" alt="">
+          <img class="h-24 rounded-lg hover:bg-orange-600" src="" alt="">
         </li>
-          {% for usuario in usuarios %}
           <li class="flex text-center justify-between">
-            <h2 class="hover:text-orange-600">
-              {{ usuario.nombre_completo }}
-            </h2>
+            <a class="hover:bg-orange-600" href="proyectos.html"> Tu perfil </a>           
           </li>
-          {% endfor %}
-      
       </ul>
   
-      <!-- dashboard proyects -->      
+      <!-- Proyects button -->      
       <ul class="flex items-center flex-col py-8">
         <li class="flex items-center justify-between">
-          <img class="h-24 rounded-lg rounded-md hover:bg-orange-600" src="lista.png" alt="">
+          <img class="h-24 rounded-lg hover:bg-orange-600" src="" alt="">
         </li>
         <li class="flex text-center justify-between">
           <a class="hover:bg-orange-600" href="proyectos.html">Proyectos </a>           
         </li>
       </ul>
   
-      <!-- dashboard team -->
+      <!-- Team button -->
       <ul class="flex items-center flex-col py-4">
         <li class="flex items-center justify-between">
-          <img class="h-24 rounded-lg rounded-md hover:bg-orange-600" src="reclutamiento.png" alt="">
+          <img class="h-24 rounded-lg hover:bg-orange-600" src="" alt="">
         </li>
         <li class="flex text-center justify-between">
           <a class="hover:bg-orange-600" href="team.html">Team </a>            
@@ -42,41 +37,16 @@
       </ul>
     </div>
     
-    <!-- dashboard-perfil -->
-    <div class="flex py-8 px-12 space-y-4 flex-col ">
-              <!--EL PERFIL-->
-        <div class="bg-white">
-          <h1 class="text-2xl"> Tu Perfil</h1>
-        </div>
-        <div class="py-2 bg-gray-100 ">
-          <p>Tu nombre: </p>
-        </div>
-        <div class="bg-gray-100 ">
-          <p>Tu Carrera: </p>
-        </div>
-        <div class="py-6 bg-gray-100">
-          <p>Descripcion: </p>
-        </div>
-        <!-- EL ROL-->
-        <div class="py-12">
-          <h1 class="text-2xl">Tu Rol</h1>
+    {% block profile %}
+    {% endblock %}
 
-        </div>
-        <div class="py-2 bg-gray-100 ">
-          <p>Rol: </p>
-        </div>
-        <div class="bg-gray-100 ">
-          <p>Tutor Academico: </p>
-        </div>
-        <div class="py-6 bg-gray-100">
-          <p>Area de Investigacion: </p>
-        </div>
-        <div class="py-2 bg-gray-100">
-          <p>Fecha de Nacimiento</p>
-        </div>
-    </div>
+    {% block projects %}
+    {% endblock %}
+
+    {% block team %}
+    {% endblock %}
+
   </div>
-
 
 </body>
 
