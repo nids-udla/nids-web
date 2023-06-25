@@ -123,32 +123,71 @@ class RegisterView(View):
 
             return redirect('/')
 
-
 class DashboardView(View):
-    nav = ''' 
-        <!-- Menu -->
-        <a href="#stats" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Estadísticas<span aria-hidden="true"></span></a>
-        <a href="#news" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Noticias<span aria-hidden="true"></span></a>
-        <a href="/team" target=blank_ class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
-    '''
+    nav = ''' a '''
 
     def get(self, request):
-        token = request.session.get('is_validated', 'False')
+        token = request.session.get('is_validated', False)
         username = request.session.get('username')
 
         if token == True:           
-            return render(request, 'usu-dashboard.html', {
+            return render(request, 'dash-home.html', {
                 'username': username,
             })
         else:
             return redirect('home')
+        
+class DashboardProfileView(View):
+    nav = ''' a '''
 
-        # if token == True:
-        #     usuarios = Usuario.objects.all()
-        #     uservalid = Usuario.objects.get(id=request.user.id)
-        #     nombreusuario = uservalid.nombre_completo            
-        #     return render(request, 'usu-dashboard.html', {
-        #         "nombreusuario":nombreusuario,
-        #         "usuarios":usuarios})
-        # else:
-        #     return redirect('home')
+    def get(self, request):
+        token = request.session.get('is_validated', 'False')
+
+        if token == True:           
+            return render(request, 'dash-profile.html', {})
+        else:
+            return redirect('home')
+        
+class DashboardProjectView(View):
+    nav = ''' a '''
+
+    def get(self, request):
+        token = request.session.get('is_validated', 'False')
+        
+        if token == True:           
+            return render(request, 'dash-proyectos.html', {})
+        else:
+            return redirect('home')
+        
+class DashboardProjectTaskView(View):
+    nav = ''' a '''
+
+    def get(self, request):
+        token = request.session.get('is_validated', 'False')
+        
+        if token == True:           
+            return render(request, 'dash-tareas.html', {})
+        else:
+            return redirect('home')
+
+class DashboardTeamView(View):
+    nav = ''' a '''
+
+    def get(self, request):
+        token = request.session.get('is_validated', 'False')
+        
+        if token == True:           
+            return render(request, 'dash-team.html', {})
+        else:
+            return redirect('home')
+
+class DashboardTeamProfileView(View):
+    nav = ''' a '''
+
+    def get(self, request):
+        token = request.session.get('is_validated', 'False')
+        
+        if token == True:           
+            return render(request, 'equ-profile.html', {})
+        else:
+            return redirect('home')
