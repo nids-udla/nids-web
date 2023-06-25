@@ -56,18 +56,25 @@ class LoginView(View):
         })
     
     def post(self, request):
+        # Getting the values from the form.
         email = request.POST['email']
         password = request.POST['password']
+        # Validating the user.
         checking = validate(email, password)
 
         if checking is True:
+            # Creating the session access.
             request.session['is_validated'] = True
+            # Getting the username object.
+            user = Usuario.objects.get(email=email)
+            # Saving in session important properties.
+            request.session['email'] = user.email
+            request.session['username'] = user.nombre_completo
 
-            return redirect('/dashboard')
+            return redirect('dashboard')
         else:
-            print('no autenticado')
-
-            return redirect('/login')
+            # Redirecting back to login.
+            return redirect('login')
 
 class LogoutView(View):
 
@@ -127,9 +134,12 @@ class DashboardView(View):
 
     def get(self, request):
         token = request.session.get('is_validated', 'False')
+        username = request.session.get('username')
 
         if token == True:           
-            return render(request, 'usu-dashboard.html', {})
+            return render(request, 'usu-dashboard.html', {
+                'username': username,
+            })
         else:
             return redirect('home')
 

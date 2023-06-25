@@ -6,33 +6,33 @@
   
   <div class="flex pb-24 h-screen">
     <div class="bg-gray-100 pt-6 px-8 flex-col">
-      <!-- Profile button -->
+      <!-- Profile link. -->
       <ul class="flex items-center flex-col py-4">
         <li class="flex justify-between">
-          <img class="h-24 rounded-lg hover:bg-orange-600" src="" alt="">
+          <img class="h-16 rounded-lg" src="{% static 'img/extras/next.png' %}" alt="">
         </li>
           <li class="flex text-center justify-between">
-            <a class="hover:bg-orange-600" href="proyectos.html"> Tu perfil </a>           
+            <a class="hover:text-orange-600" href="#"> {{ username }} </a>           
           </li>
       </ul>
   
-      <!-- Proyects button -->      
+      <!-- Proyects link. -->      
       <ul class="flex items-center flex-col py-8">
         <li class="flex items-center justify-between">
-          <img class="h-24 rounded-lg hover:bg-orange-600" src="" alt="">
+          <img class="h-20 rounded-lg" src="{% static 'img/extras/project.png' %}" alt="">
         </li>
         <li class="flex text-center justify-between">
-          <a class="hover:bg-orange-600" href="proyectos.html">Proyectos </a>           
+          <a class="hover:text-orange-600" href="proyectos.html">Proyectos </a>           
         </li>
       </ul>
   
-      <!-- Team button -->
+      <!-- Team link. -->
       <ul class="flex items-center flex-col py-4">
         <li class="flex items-center justify-between">
-          <img class="h-24 rounded-lg hover:bg-orange-600" src="" alt="">
+          <img class="h-20 rounded-lg" src="{% static 'img/extras/teamwork.png' %}" alt="">
         </li>
         <li class="flex text-center justify-between">
-          <a class="hover:bg-orange-600" href="team.html">Team </a>            
+          <a class="hover:text-orange-600" href="team.html">Team </a>            
         </li>
       </ul>
     </div>
