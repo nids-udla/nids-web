@@ -63,15 +63,11 @@ class LoginView(View):
         if checking is True:
             request.session['is_validated'] = True
 
-            return redirect('/', {
-            'opt': self.nav,
-        })
+            return redirect('/dashboard')
         else:
             print('no autenticado')
 
-            return redirect('/login', {
-            'opt': self.nav,
-        })
+            return redirect('/login')
 
 class LogoutView(View):
 
@@ -120,6 +116,7 @@ class RegisterView(View):
 
             return redirect('/')
 
+
 class DashboardView(View):
     nav = ''' 
         <!-- Menu -->
@@ -131,7 +128,17 @@ class DashboardView(View):
     def get(self, request):
         token = request.session.get('is_validated', 'False')
 
-        if token == True:
+        if token == True:           
             return render(request, 'usu-dashboard.html', {})
         else:
             return redirect('home')
+
+        # if token == True:
+        #     usuarios = Usuario.objects.all()
+        #     uservalid = Usuario.objects.get(id=request.user.id)
+        #     nombreusuario = uservalid.nombre_completo            
+        #     return render(request, 'usu-dashboard.html', {
+        #         "nombreusuario":nombreusuario,
+        #         "usuarios":usuarios})
+        # else:
+        #     return redirect('home')
