@@ -23,7 +23,6 @@
             </div>
             <!-- Opciones dinámicas de la barra de navegación -->
             <div class="flex flex-1 justify-end">  
-            {{ opt|safe }}
             {% if request.session.is_validated == True %}
             <form class="#" action="/logout/" method="POST">
               {% csrf_token %}
@@ -37,27 +36,71 @@
             {% endif %}
           </div>
         </nav>
+        {% if request.session.is_validated == True %}
+          <div class="grid grid-cols-4">
+            <p class="bg-green-500 text-sm rounded-b-lg leading-6 text-white text-center col-start-2 col-span-2">
+              Ya te encuentras <i> en línea. </i>
+            </p>
+          </div>
+        {% endif %}
     </header>
 
     <body>
-        {% block hero %}
-        {% endblock %}
+        <div class="flex pb-24 h-screen">
+            <div class="bg-gray-100 pt-6 px-8 flex-col">
+                <!-- Profile link. -->
+                <ul class="flex items-center flex-col py-4">
+                <li class="flex justify-between">
+                    <img class="h-24 rounded-lg" src="{% static 'img/extras/next.png' %}" alt="">
+                </li>
+                    <li class="flex text-center justify-between">
+                    <a class="hover:text-orange-600" href="/dashboard/perfil"> {{ username }} </a>           
+                    </li>
+                </ul>
+            
+                <!-- Projects button -->      
+                <ul class="flex items-center flex-col py-8">
+                <li class="flex items-center justify-between">
+                    <img class="h-24 rounded-lg" src="{% static 'img/extras/project.png' %}" alt="">
+                </li>
+                <li class="flex text-center justify-between">
+                    <a class="hover:text-orange-600" href="/dashboard/proyectos"> Proyectos </a>           
+                </li>
+                </ul>
+            
+                <!-- Team button -->
+                <ul class="flex items-center flex-col py-4">
+                <li class="flex items-center justify-between">
+                    <img class="h-24 rounded-lg" src="{% static 'img/extras/teamwork.png' %}" alt="">
+                </li>
+                <li class="flex text-center justify-between">
+                    <a class="hover:text-orange-600" href="/dashboard/equipo"> Equipo </a>            
+                </li>
+                </ul>
+            </div>
 
-        {% block stats %}
-        {% endblock %}
+            <!-- Dashboard home -->
+            {% block home %}
+            {% endblock %}
+            
+            <!-- Dashboard perfil -->
+            {% block profile %}
+            {% endblock %}
 
-        {% block news %}
-        {% endblock %}
+            <!--Dashboard proyectos -->
+            {% block projects %}
+            {% endblock %}
 
-        {% block team %}
-        {% endblock %}
+            <!--Dashboard proyectos -->
+            {% block tasks %}
+            {% endblock %}
 
-        {% block profile %}
-        {% endblock %}
+            <!--Dashboard team -->
+            {% block team %}
+            {% endblock %}
 
-        {% block login %}
-        {% endblock %}
-
+            <!--Queda pendiente el profile-->
+        </div>
     </body>
 
     <footer class="bg-white border-2 border-t-zinc-400 mt-6">
