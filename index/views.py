@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
 from .login import validate, encrypt, verify
-from .models import Usuario
+from .models import Usuario, Investigacion, Funcion, Rol, Area
 from django.contrib import messages
 
 
@@ -65,11 +65,30 @@ class LoginView(View):
         if checking is True:
             # Creating the session access.
             request.session['is_validated'] = True
-            # Getting the username object.
+            # Getting the ids needed.
             user = Usuario.objects.get(email=email)
+
+            funcion = Funcion.objects.get(id_usuario=user.id)
+            investigacion = Investigacion.objects.get(id_usuario=user.id)
+
+            print('!!!!!! ---> {}'.format(funcion.id_rol))
+            print('!!!!!! ---> {}'.format(investigacion))
+
+            rol = Rol.objects.get(id=funcion.id_usuario)
+            area = Area.objects.get(id=investigacion.id_area)
             # Saving in session important properties.
-            request.session['email'] = user.email
             request.session['username'] = user.nombre_completo
+            request.session['about'] = user.description
+            request.session['rol'] = rol.nombre
+            request.session['area'] = area.nombre
+            # !!!! ---> Faltan los estudios.
+            request.session['socialsA'] = user.linkedin
+            request.session['socialsB'] = user.github
+            request.session['socialsC'] = user.extra_rrss
+
+            print('!!!!! ---> {}'.format(request.session['socialsA']))
+            print('!!!!! ---> {}'.format(request.session['socialsB']))
+            print('!!!!! ---> {}'.format(request.session['socialsC']))
 
             return redirect('dashboard')
         else:
@@ -124,15 +143,27 @@ class RegisterView(View):
             return redirect('/')
 
 class DashboardView(View):
-    nav = ''' a '''
 
     def get(self, request):
         token = request.session.get('is_validated', False)
         username = request.session.get('username')
+        about = request.session.get('about')
+        rol = request.session.get('rol')
+        area = request.session.get('area')
+        # !!!! ---> Faltan los estudios.
+        socialsA = request.session.get('socialsA')
+        socialsB = request.session.get('socialsB')
+        socialsC = request.session.get('socialsC')
 
         if token == True:           
             return render(request, 'dash-home.html', {
                 'username': username,
+                'about': about,
+                'rol': rol,
+                'area': area,
+                'socialsA': socialsA,
+                'socialsB': socialsB,
+                'socialsC': socialsC,
             })
         else:
             return redirect('home')
@@ -142,9 +173,12 @@ class DashboardProfileView(View):
 
     def get(self, request):
         token = request.session.get('is_validated', 'False')
+        username = request.session.get('username')
 
         if token == True:           
-            return render(request, 'dash-profile.html', {})
+            return render(request, 'dash-profile.html', {
+                'username': username,
+            })
         else:
             return redirect('home')
         
@@ -153,9 +187,12 @@ class DashboardProjectView(View):
 
     def get(self, request):
         token = request.session.get('is_validated', 'False')
+        username = request.session.get('username')
         
         if token == True:           
-            return render(request, 'dash-proyectos.html', {})
+            return render(request, 'dash-proyectos.html', {
+                'username': username,
+            })
         else:
             return redirect('home')
         
@@ -164,9 +201,12 @@ class DashboardProjectTaskView(View):
 
     def get(self, request):
         token = request.session.get('is_validated', 'False')
+        username = request.session.get('username')
         
         if token == True:           
-            return render(request, 'dash-tareas.html', {})
+            return render(request, 'dash-tareas.html', {
+                'username': username,
+            })
         else:
             return redirect('home')
 
@@ -175,9 +215,12 @@ class DashboardTeamView(View):
 
     def get(self, request):
         token = request.session.get('is_validated', 'False')
+        username = request.session.get('username')
         
         if token == True:           
-            return render(request, 'dash-team.html', {})
+            return render(request, 'dash-team.html', {
+                'username': username,
+            })
         else:
             return redirect('home')
 
@@ -186,8 +229,11 @@ class DashboardTeamProfileView(View):
 
     def get(self, request):
         token = request.session.get('is_validated', 'False')
+        username = request.session.get('username')
         
         if token == True:           
-            return render(request, 'equ-profile.html', {})
+            return render(request, 'dash-profile.html', {
+                'username': username,
+            })
         else:
             return redirect('home')
