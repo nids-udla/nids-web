@@ -2,5 +2,47 @@
 {% load static %}
 
 {% block home %}
-    <h1>Bienvenido al dashboard.</h1>
+<div class="mt-7 flex-col">
+    <h1 class="text-2xl font-bold mt-4">Perfil</h1>
+    <div class="flex items-center my-2">
+      <input type="text" class="px-4 py-2 bg-gray-800 mr-4 font-semibold w-56" placeholder="Nombre">
+      <button class="px-4 py-2 border border-orange-700 rounded-full">Editar</button>
+    </div>
+    <div class="flex items-center my-2">
+      <input type="text" class="px-4 py-2 bg-gray-800 mr-4 font-semibold w-56" placeholder="rut">
+      <button class="px-4 py-2 border border-orange-700 rounded-full">Editar</button>
+    </div>
+    <div class="flex items-center my-2">
+      <input type="text" class="px-4 py-2 bg-gray-700 mr-4 font-semibold w-56" placeholder="Carrera">
+      <button class="px-4 py-2 border border-orange-700 rounded-full">Editar</button>
+    </div>
+    <div class="flex items-center my-2">
+      <input type="text" class="px-4 py-2 bg-gray-700 mr-4 font-semibold w-56" placeholder="Descripción">
+      <button class="px-4 py-2 border border-orange-700 rounded-full">Editar</button>
+    </div>
+    <h1 class="text-2xl font-bold mt-4">Rol</h1>
+    <div class="flex items-center my-2">
+      <input type="text" class="px-4 py-2 bg-gray-700 mr-4 font-semibold w-56" placeholder="Rol">
+      <div class="flex items-center">
+        <button class="px-4 py-2 text-orange-600 rounded-full">Asistente, Practicante, etc</button>
+      </div>
+    </div>
+    <div class="flex items-center my-2">
+      <input type="text" class="px-4 py-2 bg-gray-700 mr-4 font-semibold w-56" placeholder="Tutor academico">
+      <div class="flex items-center">
+        <button class="px-4 py-2 text-orange-600 rounded-full">Nombre tutor</button>
+      </div>
+    </div>
+    <div class="flex items-center my-2">
+      <input type="text" class="px-4 py-2 bg-gray-700 mr-4 font-semibold w-56" placeholder="Area de investigacion">
+      <div class="flex items-center">
+        <button class="px-4 py-2 text-orange-600 rounded-full">Genomica, web, climate, etc</button>
+      </div>
+    </div>
+    <div class="flex items-center my-2">
+      <input type="text" class="px-4 py-2 bg-gray-700 mr-4 font-semibold w-56" placeholder="Fecha de inicio">
+      <div class="flex items-center">
+        <input type="date" class="px-4 py-2 rounded-full"></input>
+      </div>
+    </div>
 {% endblock %}  
