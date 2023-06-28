@@ -1,10 +1,10 @@
 {% extends 'dash-base.html' %}
 {% load static %}
 
+<h1>Bienvenido a los miembros de tu equipo.</h1>
+<a href='/dashboard/equipo/profile'> Perfil de compañero </a>
+
 {% block team %}
-  <h1>Bienvenido a los miembros de tu equipo.</h1>
-  <a href='/dashboard/equipo/profile'> Perfil de compañero </a>
-{% endblock %}
 
 <div class="bg-white py-32">
   <div class="mx-auto max-w-7xl px-6 text-center lg:px-8">
@@ -41,3 +41,5 @@
     </ul>
   </div>
 </div>
+
+{% endblock %}

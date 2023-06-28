@@ -10,7 +10,7 @@ class HomeView(View):
         <!-- Menu -->
         <a href="#stats" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Estadísticas<span aria-hidden="true"></span></a>
         <a href="#news" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Noticias<span aria-hidden="true"></span></a>
-        <a href="/team" target=blank_ class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
+        <a href="/team/" target=blank_ class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
     '''
 
     def get(self, request):
@@ -63,32 +63,21 @@ class LoginView(View):
         checking = validate(email, password)
 
         if checking is True:
-            # Creating the session access.
-            request.session['is_validated'] = True
             # Getting the ids needed.
             user = Usuario.objects.get(email=email)
-
             funcion = Funcion.objects.get(id_usuario=user.id)
             investigacion = Investigacion.objects.get(id_usuario=user.id)
-
-            print('!!!!!! ---> {}'.format(funcion.id_rol))
-            print('!!!!!! ---> {}'.format(investigacion))
-
-            rol = Rol.objects.get(id=funcion.id_usuario)
-            area = Area.objects.get(id=investigacion.id_area)
             # Saving in session important properties.
             request.session['username'] = user.nombre_completo
-            request.session['about'] = user.description
-            request.session['rol'] = rol.nombre
-            request.session['area'] = area.nombre
+            request.session['about'] = user.descripcion
+            request.session['rol'] = funcion.id_rol.nombre
+            request.session['area'] = investigacion.id_area.nombre
             # !!!! ---> Faltan los estudios.
             request.session['socialsA'] = user.linkedin
             request.session['socialsB'] = user.github
             request.session['socialsC'] = user.extra_rrss
-
-            print('!!!!! ---> {}'.format(request.session['socialsA']))
-            print('!!!!! ---> {}'.format(request.session['socialsB']))
-            print('!!!!! ---> {}'.format(request.session['socialsC']))
+            # Creating the session access.
+            request.session['is_validated'] = True
 
             return redirect('dashboard')
         else:
@@ -147,23 +136,10 @@ class DashboardView(View):
     def get(self, request):
         token = request.session.get('is_validated', False)
         username = request.session.get('username')
-        about = request.session.get('about')
-        rol = request.session.get('rol')
-        area = request.session.get('area')
-        # !!!! ---> Faltan los estudios.
-        socialsA = request.session.get('socialsA')
-        socialsB = request.session.get('socialsB')
-        socialsC = request.session.get('socialsC')
 
         if token == True:           
             return render(request, 'dash-home.html', {
                 'username': username,
-                'about': about,
-                'rol': rol,
-                'area': area,
-                'socialsA': socialsA,
-                'socialsB': socialsB,
-                'socialsC': socialsC,
             })
         else:
             return redirect('home')
@@ -174,10 +150,14 @@ class DashboardProfileView(View):
     def get(self, request):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
+        rol = request.session.get('rol')
+        area = request.session.get('area')
 
         if token == True:           
             return render(request, 'dash-profile.html', {
                 'username': username,
+                'rol': rol,
+                'area': area,
             })
         else:
             return redirect('home')
