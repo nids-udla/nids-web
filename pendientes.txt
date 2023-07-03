@@ -1,0 +1,37 @@
+FrontEnd = [
+    {
+        -> Agregar un carrusel de fotos al inicio,
+        -> Traer la lista de miembros completa y renderizarla,
+    },
+]
+
+Perfil = [
+    {
+        -> Agregar vista previa del perfil,
+        -> Rediseñar tabla del perfil,
+        -> Que cargue bien todo al abrir el perfil,
+        -> Que funcione el editar la información desde el perfil,
+    },
+]
+
+Proyectos = [
+    {
+        -> Que al abrir proyectos se muestren aquellos en los que estoy relacionado,
+        -> Que al abrir cada proyecto se despieguen las tareas de aquel,
+        -> Que se pueda editar el estado de las tareas (hecho/no hecho),
+        -> Que se puedan agregar proyectos si es un profesor quien ingreso,
+        -> Que se puedan agregar tareas al proyecto.
+    }
+]
+
+Usuarios =  [
+    {
+        -> Que se puedan crear usuarios nuevos si es un profesor quien ingreso,
+        -> Que se pueda eliminar usuarios si es un profesor quien ingreso,
+        -> Que se puedan cambiar las contraseñas si es profesor quien ingreso,
+    }
+]
+
+Temas a parte:
+    - Mejorar el sistema de usuarios.
+    - Refactorizar.
