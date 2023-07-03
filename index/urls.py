@@ -25,7 +25,7 @@ from .views import HomeView, TeamView, ProfileView, LoginView, LogoutView, Regis
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('team/', TeamView.as_view(), name='team'),
-    path('profile/', ProfileView.as_view(), name='profile'),
+    path('team/<str:name>', ProfileView.as_view(), name='profile'),
 
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

@@ -25,8 +25,17 @@ class TeamView(View):
     '''
 
     def get(self, request):
+        users = Usuario.objects.all()
+        for e in users:
+            funcion = Funcion.objects.get(id_usuario=e.id)
+            setattr(e, 'url', '{}'.format(e.nombre_completo))
+            setattr(e, 'role', '{}'.format(funcion.id_rol.nombre))
+            # Agregar mayor precisión en la selección de la ruta para las fotos.
+            setattr(e, 'img', 'img/asistentes/as franco.png')
+
         return render(request, 'equ-team.html', {
             'opt': self.nav,
+            'users': users,
         })
 
 class ProfileView(View):
@@ -36,9 +45,16 @@ class ProfileView(View):
         <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
     '''
 
-    def get(self, request):
+    def get(self, request, name):
+        user = Usuario.objects.get(nombre_completo=name)
+        funcion = Funcion.objects.get(id_usuario=user.id)
+        setattr(user, 'role', '{}'.format(funcion.id_rol.nombre))
+        # Agregar mayor precisión en la selección de la ruta para las fotos.
+        setattr(user, 'img', 'img/asistentes/as franco.png')
+
         return render(request, 'equ-profile.html', {
-            'opt': self.nav
+            'opt': self.nav,
+            'user': user,
         })
 
 # Falta agregar una clase para el detalle de la noticia.

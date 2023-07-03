@@ -1,7 +1,7 @@
 FrontEnd = [
     {
         -> Agregar un carrusel de fotos al inicio,
-        -> Traer la lista de miembros completa y renderizarla,
+        -> Traer la lista de miembros completa y renderizarla, /// Hecho
     },
 ]
 
