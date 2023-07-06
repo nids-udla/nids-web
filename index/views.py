@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
+
+from index.forms import FormularioUsuario
 from .login import validate, encrypt, verify
 from .models import Usuario, Investigacion, Funcion, Rol, Area
 from django.contrib import messages
@@ -147,8 +149,9 @@ class RegisterView(View):
 
             return redirect('/')
 
-class DashboardView(View):
 
+class DashboardView(View):
+    
     def get(self, request):
         token = request.session.get('is_validated', False)
         username = request.session.get('username')
@@ -159,10 +162,9 @@ class DashboardView(View):
             })
         else:
             return redirect('home')
-        
+    
 class DashboardProfileView(View):
     nav = ''' a '''
-
     def get(self, request):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
@@ -176,8 +178,27 @@ class DashboardProfileView(View):
                 'area': area,
             })
         else:
-            return redirect('home')
+            return redirect('home') 
+
+    # def edit(self, request):
+    #     token = request.session.get('is_validated', False)
+    #     if token==True:
+    #         form = FormularioUsuario(instance=request.user)
+    #         return render(request, "dash-edit-profile.html", {"form": form})
         
+    def post(self, request):
+        token = request.session.get('is_validated', False)
+        if token==True:
+            form=FormularioUsuario(request.POST,instance=request.user)
+            if form.is_valid():
+                form.save()
+            nombre=Usuario.nombre_completo
+            return render(request, "dash-profile.html", {"usuario":nombre})
+
+
+
+
+
 class DashboardProjectView(View):
     nav = ''' a '''
 

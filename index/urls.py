@@ -37,4 +37,5 @@ urlpatterns = [
     path('dashboard/poyectos/tareas', DashboardProjectTaskView.as_view(), name='dash-proyectos-tareas'),
     path('dashboard/equipo', DashboardTeamView.as_view(), name='dash-equipo'),
     path('dashboard/equipo/profile', DashboardTeamProfileView.as_view(), name='dash-compañero'),
+    path('dashboard/actualizar/profile',DashboardProfileView.post, name='dash-actualizar-profile'),
 ]
