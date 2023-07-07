@@ -91,7 +91,6 @@ class LoginView(View):
             # !!!! ---> Faltan los estudios.
             request.session['socialsA'] = user.linkedin
             request.session['socialsB'] = user.github
-            request.session['socialsC'] = user.extra_rrss
             # Creating the session access.
             request.session['is_validated'] = True
 
@@ -177,6 +176,20 @@ class DashboardProfileView(View):
             })
         else:
             return redirect('home')
+        
+    # Ruta POST para formulario (TEYSON)
+    # def post(self, request):
+    #     username = request.session.get('username')
+    #     print('///// ---> {}'.format(username))
+
+    #     user = Usuario.objects.get(nombre_completo=username)
+    #     nombre = request.POST['nombre']
+    #     user.nombre_completo = nombre
+    #     user.save()
+        
+    #     print('///// ---> {}'.format(user.nombre_completo))
+
+    #     return redirect('dashboard')
         
 class DashboardProjectView(View):
     nav = ''' a '''
