@@ -1,7 +1,5 @@
 from django.shortcuts import redirect, render
 from django.views import View
-
-from index.forms import FormularioUsuario
 from .login import validate, encrypt, verify
 from .models import Usuario, Investigacion, Funcion, Rol, Area, Proyecto, Asignado, Tarea
 from django.contrib import messages
@@ -178,19 +176,30 @@ class DashboardProfileView(View):
         else:
             return redirect('home')
         
-    # Ruta POST para formulario (TEYSON)
-    # def post(self, request):
-    #     username = request.session.get('username')
-    #     print('///// ---> {}'.format(username))
-
-    #     user = Usuario.objects.get(nombre_completo=username)
-    #     nombre = request.POST['nombre']
-    #     user.nombre_completo = nombre
-    #     user.save()
+class DashboardEditProfileView(View):
+    nav = ''' a '''    
+    def get(self, request):
+        token = request.session.get('is_validated', 'False')
         
-    #     print('///// ---> {}'.format(user.nombre_completo))
+        if token == True:           
+            return render(request, 'dash-edit-profile.html'
 
-    #     return redirect('dashboard')
+            )
+        else:
+            return redirect('home')
+        
+    def post(self, request):
+        username = request.session.get('username')
+        print('///// ---> {}'.format(username))
+
+        user = Usuario.objects.get(nombre_completo=username)
+        nombre = request.POST['nombre']
+        user.nombre_completo = nombre
+        user.save()
+        
+        print('///// ---> {}'.format(user.nombre_completo))
+
+        return render(request, 'dash-edit-profile.html')
         
 class DashboardProjectView(View):
     nav = ''' a '''
