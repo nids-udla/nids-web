@@ -1,0 +1,12 @@
+{% extends 'dash-base.html' %}
+{% load static %}
+
+{% block edit %}
+<h1> Editar Perfil </h1>
+<form action="{% url 'dash-actualizar-profile' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Guardar</button>
+
+</form>
+
+{% endblock %}

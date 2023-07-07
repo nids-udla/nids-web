@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
+
+from index.forms import FormularioUsuario
 from .login import validate, encrypt, verify
 from .models import Usuario, Investigacion, Funcion, Rol, Area
 from django.contrib import messages
@@ -146,8 +148,9 @@ class RegisterView(View):
 
             return redirect('/')
 
-class DashboardView(View):
 
+class DashboardView(View):
+    
     def get(self, request):
         token = request.session.get('is_validated', False)
         username = request.session.get('username')
@@ -158,10 +161,9 @@ class DashboardView(View):
             })
         else:
             return redirect('home')
-        
+    
 class DashboardProfileView(View):
     nav = ''' a '''
-
     def get(self, request):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
