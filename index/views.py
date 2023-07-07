@@ -3,7 +3,7 @@ from django.views import View
 
 from index.forms import FormularioUsuario
 from .login import validate, encrypt, verify
-from .models import Usuario, Investigacion, Funcion, Rol, Area
+from .models import Usuario, Investigacion, Funcion, Rol, Area, Proyecto, Asignado, Tarea
 from django.contrib import messages
 
 
@@ -198,10 +198,15 @@ class DashboardProjectView(View):
     def get(self, request):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
+
+        proyectos = Proyecto.objects.all()
+        for e in proyectos:
+            setattr(e, 'url', '{}'.format(e.titulo))
         
         if token == True:           
             return render(request, 'dash-proyectos.html', {
                 'username': username,
+                'projects': proyectos
             })
         else:
             return redirect('home')
@@ -209,13 +214,28 @@ class DashboardProjectView(View):
 class DashboardProjectTaskView(View):
     nav = ''' a '''
 
-    def get(self, request):
+    def get(self, request, name):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
-        
+
+        id_proyecto = Proyecto.objects.get(titulo=name)
+        asignaciones = Asignado.objects.filter(id_proyecto=id_proyecto)
+
+        for e in asignaciones:
+            user = Usuario.objects.get(id=e.id_usuario_id)
+            tareas = Tarea.objects.get(id=e.id_tarea_id)
+            setattr(e, 'incharge', '{}'.format(user.nombre_completo))
+            setattr(e, 'tasktitle', '{}'.format(tareas.titulo))
+            setattr(e, 'taskdescription', '{}'.format(tareas.descripcion))
+            if tareas.completado:
+                setattr(e, 'isdone', 'Completado')
+            else:
+                setattr(e, 'isdone', 'No completado')
+
         if token == True:           
             return render(request, 'dash-tareas.html', {
-                'username': username,
+                'title': name,
+                'tasks': asignaciones,
             })
         else:
             return redirect('home')
