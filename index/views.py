@@ -148,7 +148,6 @@ class RegisterView(View):
 
             return redirect('/')
 
-
 class DashboardView(View):
     
     def get(self, request):

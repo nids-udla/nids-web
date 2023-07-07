@@ -20,11 +20,12 @@ from django.db import models
 # -------------------------------------------
 class Usuario(models.Model):
     nombre_completo = models.CharField(max_length=100)
-    email = models.EmailField(max_length=254, default="none")
-    password = models.CharField(max_length=300)
-    descripcion = models.CharField(max_length=100)
-    linkedin = models.URLField(blank=True)
-    github = models.URLField(blank=True)
+    email = models.EmailField(max_length=254, default="none") # Editable
+    password = models.CharField(max_length=300) # Editable solo por profesores
+    telefono = models.CharField(max_length=300, default="none") # Editable
+    descripcion = models.CharField(max_length=100) # Editable
+    linkedin = models.URLField(blank=True) # Editable
+    github = models.URLField(blank=True) # Editable
     
 class Estadisticas(models.Model):
     titulo = models.CharField(max_length=100)
@@ -33,8 +34,8 @@ class Estadisticas(models.Model):
 class Tarea(models.Model):
     titulo = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
-    # completado = models.BooleanField(default=False)
-    # fecha_inicio = models.DateField()
+    completado = models.BooleanField(default=False)
+    fecha_inicio = models.DateField(default=None)
 
 class Rol(models.Model):
     nombre = models.CharField(max_length=100)

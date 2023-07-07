@@ -38,5 +38,5 @@ urlpatterns = [
     path('dashboard/proyectos/tareas/completar', DashboardprojectTaskcompleteview.as_view(), name='dash-tareas-completar'),
     path('dashboard/equipo', DashboardTeamView.as_view(), name='dash-equipo'),
     path('dashboard/equipo/profile', DashboardTeamProfileView.as_view(), name='dash-compañero'),
-    path('dashboard/actualizar/profile',DashboardProfileView.post, name='dash-actualizar-profile'),
+    path('dashboard/actualizar/profile',DashboardProfileView.as_view(), name='dash-actualizar-profile'),
 ]
