@@ -25,8 +25,7 @@ class Usuario(models.Model):
     descripcion = models.CharField(max_length=100)
     linkedin = models.URLField(blank=True)
     github = models.URLField(blank=True)
-    extra_rrss = models.URLField(blank=True)
-
+    
 class Estadisticas(models.Model):
     titulo = models.CharField(max_length=100)
     valor = models.IntegerField()
@@ -34,6 +33,8 @@ class Estadisticas(models.Model):
 class Tarea(models.Model):
     titulo = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
+    # completado = models.BooleanField(default=False)
+    # fecha_inicio = models.DateField()
 
 class Rol(models.Model):
     nombre = models.CharField(max_length=100)

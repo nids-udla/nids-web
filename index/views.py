@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
+
+from index.forms import FormularioUsuario
 from .login import validate, encrypt, verify
 from .models import Usuario, Investigacion, Funcion, Rol, Area
 from django.contrib import messages
@@ -91,7 +93,6 @@ class LoginView(View):
             # !!!! ---> Faltan los estudios.
             request.session['socialsA'] = user.linkedin
             request.session['socialsB'] = user.github
-            request.session['socialsC'] = user.extra_rrss
             # Creating the session access.
             request.session['is_validated'] = True
 
@@ -147,8 +148,9 @@ class RegisterView(View):
 
             return redirect('/')
 
-class DashboardView(View):
 
+class DashboardView(View):
+    
     def get(self, request):
         token = request.session.get('is_validated', False)
         username = request.session.get('username')
@@ -159,10 +161,9 @@ class DashboardView(View):
             })
         else:
             return redirect('home')
-        
+    
 class DashboardProfileView(View):
     nav = ''' a '''
-
     def get(self, request):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
@@ -177,6 +178,20 @@ class DashboardProfileView(View):
             })
         else:
             return redirect('home')
+        
+    # Ruta POST para formulario (TEYSON)
+    # def post(self, request):
+    #     username = request.session.get('username')
+    #     print('///// ---> {}'.format(username))
+
+    #     user = Usuario.objects.get(nombre_completo=username)
+    #     nombre = request.POST['nombre']
+    #     user.nombre_completo = nombre
+    #     user.save()
+        
+    #     print('///// ---> {}'.format(user.nombre_completo))
+
+    #     return redirect('dashboard')
         
 class DashboardProjectView(View):
     nav = ''' a '''
