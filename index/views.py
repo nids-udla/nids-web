@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from .login import validate, encrypt, verify
+from .login import validate, encrypt, verify,validaremail
 from .models import Usuario, Investigacion, Funcion, Rol, Area, Proyecto, Asignado, Tarea
 from django.contrib import messages
 
@@ -193,21 +193,25 @@ class DashboardEditProfileView(View):
     def post(self, request):
         username = request.session.get('username')
         print('///// ---> {}'.format(username))
-
         user = Usuario.objects.get(nombre_completo=username)
         nombre = request.POST['nombre']
         user.nombre_completo = nombre
-        user.save()        
-
+        user.save()
         print('///// ---> {}'.format(user.nombre_completo))
-        email = request.session.get('email')
-        print('///// ---> {}'.format(email))   
+
+        email = request.session.get('email')   
         user = Usuario.objects.get(email=email)
         gmail = request.POST['email']
-        user.email=gmail
-        user.save()
+        verificar=validaremail(gmail)
+        if verificar is True:
+            user.email=gmail
+            user.save()
+            return redirect('dash-perfil')            
+        else: 
 
-        return render(request, 'dash-edit-profile.html')
+            return redirect('dash-perfil-edit')           
+
+
         
 class DashboardProjectView(View):
     nav = ''' a '''

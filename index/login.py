@@ -1,5 +1,7 @@
 import hashlib
 from .models import Usuario
+from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
 
 def verify(email):
     find = Usuario.objects.get(email=email)
@@ -29,6 +31,14 @@ def validate(email, password):
             return False
     else:
         return None
+
+def validaremail(email):
+    validar = EmailValidator()
+    try:
+        validar(email)
+        return True
+    except ValidationError:
+        return False
     
 # ------------------------------------------------------------------------
 # Creo que es aplicable sin tener que utilizar todo este código.
