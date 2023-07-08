@@ -84,6 +84,7 @@ class LoginView(View):
             funcion = Funcion.objects.get(id_usuario=user.id)
             investigacion = Investigacion.objects.get(id_usuario=user.id)
             # Saving in session important properties.
+            request.session['email'] = user.email
             request.session['username'] = user.nombre_completo
             request.session['about'] = user.descripcion
             request.session['rol'] = funcion.id_rol.nombre
@@ -146,6 +147,7 @@ class RegisterView(View):
 
             return redirect('/')
 
+
 class DashboardView(View):
     
     def get(self, request):
@@ -195,9 +197,15 @@ class DashboardEditProfileView(View):
         user = Usuario.objects.get(nombre_completo=username)
         nombre = request.POST['nombre']
         user.nombre_completo = nombre
-        user.save()
-        
+        user.save()        
+
         print('///// ---> {}'.format(user.nombre_completo))
+        email = request.session.get('email')
+        print('///// ---> {}'.format(email))   
+        user = Usuario.objects.get(email=email)
+        gmail = request.POST['email']
+        user.email=gmail
+        user.save()
 
         return render(request, 'dash-edit-profile.html')
         
@@ -256,17 +264,3 @@ class DashboardTeamProfileView(View):
             })
         else:
             return redirect('home')
-        
-class DashboardprojectTaskcompleteview(View):
-    nav = ''' a '''
-    def get(self, request):
-        token = request.session.get('is_validated', 'False')
-        username = request.session.get('username')
-        
-        if token == True:           
-            return render(request, 'dash-completar.html', {
-                'username': username,
-            })
-        else:
-            return redirect('home')
-
