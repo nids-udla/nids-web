@@ -35,8 +35,8 @@ urlpatterns = [
     path('dashboard/perfil', DashboardProfileView.as_view(), name='dash-perfil'),
     path('dashboard/perfil/edit/', DashboardEditProfileView.as_view(), name='dash-perfil-edit'),
     path('dashboard/proyectos', DashboardProjectView.as_view(), name='dash-proyectos'),
-    path('dashboard/proyectos/tareas', DashboardProjectTaskView.as_view(), name='dash-proyectos-tareas'),
-    # path('dashboard/proyectos/tareas/completar', DashboardprojectTaskcompleteview.as_view(), name='dash-tareas-completar'),
+    path('dashboard/proyectos/tareas/<str:name>', DashboardProjectTaskView.as_view(), name='dash-proyectos-tareas'),
+    path('dashboard/proyectos/tareas/completar', DashboardprojectTaskcompleteview.as_view(), name='dash-tareas-completar'),
     path('dashboard/equipo', DashboardTeamView.as_view(), name='dash-equipo'),
     path('dashboard/equipo/profile', DashboardTeamProfileView.as_view(), name='dash-compañero'),
 ]
