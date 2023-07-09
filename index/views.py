@@ -86,6 +86,7 @@ class LoginView(View):
             # Saving in session important properties.
             request.session['email'] = user.email
             request.session['username'] = user.nombre_completo
+            request.session['telefono'] = user.telefono            
             request.session['about'] = user.descripcion
             request.session['rol'] = funcion.id_rol.nombre
             request.session['area'] = investigacion.id_area.nombre
@@ -168,12 +169,18 @@ class DashboardProfileView(View):
         username = request.session.get('username')
         rol = request.session.get('rol')
         area = request.session.get('area')
+        description = request.session.get('about')
+        email = request.session.get('email')
+        telefono= request.session.get('telefono')
 
         if token == True:           
             return render(request, 'dash-profile.html', {
                 'username': username,
                 'rol': rol,
                 'area': area,
+                'description': description,
+                'email': email,
+                'telefono':telefono,
             })
         else:
             return redirect('home')
@@ -192,25 +199,28 @@ class DashboardEditProfileView(View):
         
     def post(self, request):
         username = request.session.get('username')
-        print('///// ---> {}'.format(username))
         user = Usuario.objects.get(nombre_completo=username)
         nombre = request.POST['nombre']
-        user.nombre_completo = nombre
-        user.save()
-        print('///// ---> {}'.format(user.nombre_completo))
+
+        numero= request.session.get('telefono')
+        user=Usuario.objects.get(telefono=numero)
+        telefono = request.POST['telefono']        
 
         email = request.session.get('email')   
         user = Usuario.objects.get(email=email)
         gmail = request.POST['email']
         verificar=validaremail(gmail)
         if verificar is True:
-            user.email=gmail
+            user.nombre_completo = nombre
             user.save()
+            user.telefono=telefono
+            user.save()            
+            user.email=gmail
+            user.save()           
             return redirect('dash-perfil')            
         else: 
-
-            return redirect('dash-perfil-edit')           
-
+    
+            return redirect('dash-perfil-edit')          
 
         
 class DashboardProjectView(View):

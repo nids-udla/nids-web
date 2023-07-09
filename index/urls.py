@@ -33,7 +33,7 @@ urlpatterns = [
 
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('dashboard/perfil', DashboardProfileView.as_view(), name='dash-perfil'),
-    path('dashboard/perfil/edit/', DashboardEditProfileView.as_view(), name='dash-perfil-edit'),
+    path('dashboard/perfil/edit', DashboardEditProfileView.as_view(), name='dash-perfil-edit'),
     path('dashboard/proyectos', DashboardProjectView.as_view(), name='dash-proyectos'),
     path('dashboard/proyectos/tareas/<str:name>', DashboardProjectTaskView.as_view(), name='dash-proyectos-tareas'),
     # path('dashboard/proyectos/tareas/completar', DashboardprojectTaskcompleteview.as_view(), name='dash-tareas-completar'),
