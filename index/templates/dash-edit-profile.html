@@ -2,11 +2,14 @@
 {% load static %}
 
 {% block edit %}
-<h1> Editar Perfil </h1>
-<form action="{% url 'dash-actualizar-profile' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <h1>Modifica tu nombre</h1>
+    <form class="" action="." method="POST">
+        {% csrf_token %}
+        <input type="text" required name="nombre" class=" ml-6" placeholder="Ingresa tu nombre:"></input>
+        <input type="text"  name="edad" class=" ml-6" placeholder="Ingresa tu edad:"></input>
+        <input type="text" required name="email" class=" ml-6" placeholder="Ingresa tu email:"></input>
 
-</form>
+        <button type="submit" class="bg-orange-500 p-2 mt-6"> Vamos </button>
+    </form>
 
 {% endblock %}

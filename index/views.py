@@ -1,9 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
-
-from index.forms import FormularioUsuario
-from .login import validate, encrypt, verify
-from .models import Usuario, Investigacion, Funcion, Rol, Area
+from .login import validate, encrypt, verify,validaremail
+from .models import Usuario, Investigacion, Funcion, Rol, Area, Proyecto, Asignado, Tarea
 from django.contrib import messages
 
 
@@ -86,6 +84,7 @@ class LoginView(View):
             funcion = Funcion.objects.get(id_usuario=user.id)
             investigacion = Investigacion.objects.get(id_usuario=user.id)
             # Saving in session important properties.
+            request.session['email'] = user.email
             request.session['username'] = user.nombre_completo
             request.session['about'] = user.descripcion
             request.session['rol'] = funcion.id_rol.nombre
@@ -148,6 +147,7 @@ class RegisterView(View):
 
             return redirect('/')
 
+
 class DashboardView(View):
     
     def get(self, request):
@@ -178,19 +178,40 @@ class DashboardProfileView(View):
         else:
             return redirect('home')
         
-    # Ruta POST para formulario (TEYSON)
-    # def post(self, request):
-    #     username = request.session.get('username')
-    #     print('///// ---> {}'.format(username))
-
-    #     user = Usuario.objects.get(nombre_completo=username)
-    #     nombre = request.POST['nombre']
-    #     user.nombre_completo = nombre
-    #     user.save()
+class DashboardEditProfileView(View):
+    nav = ''' a '''    
+    def get(self, request):
+        token = request.session.get('is_validated', 'False')
         
-    #     print('///// ---> {}'.format(user.nombre_completo))
+        if token == True:           
+            return render(request, 'dash-edit-profile.html'
 
-    #     return redirect('dashboard')
+            )
+        else:
+            return redirect('home')
+        
+    def post(self, request):
+        username = request.session.get('username')
+        print('///// ---> {}'.format(username))
+        user = Usuario.objects.get(nombre_completo=username)
+        nombre = request.POST['nombre']
+        user.nombre_completo = nombre
+        user.save()
+        print('///// ---> {}'.format(user.nombre_completo))
+
+        email = request.session.get('email')   
+        user = Usuario.objects.get(email=email)
+        gmail = request.POST['email']
+        verificar=validaremail(gmail)
+        if verificar is True:
+            user.email=gmail
+            user.save()
+            return redirect('dash-perfil')            
+        else: 
+
+            return redirect('dash-perfil-edit')           
+
+
         
 class DashboardProjectView(View):
     nav = ''' a '''
@@ -198,10 +219,15 @@ class DashboardProjectView(View):
     def get(self, request):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
+
+        proyectos = Proyecto.objects.all()
+        for e in proyectos:
+            setattr(e, 'url', '{}'.format(e.titulo))
         
         if token == True:           
             return render(request, 'dash-proyectos.html', {
                 'username': username,
+                'projects': proyectos
             })
         else:
             return redirect('home')
@@ -209,13 +235,28 @@ class DashboardProjectView(View):
 class DashboardProjectTaskView(View):
     nav = ''' a '''
 
-    def get(self, request):
+    def get(self, request, name):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
-        
+
+        id_proyecto = Proyecto.objects.get(titulo=name)
+        asignaciones = Asignado.objects.filter(id_proyecto=id_proyecto)
+
+        for e in asignaciones:
+            user = Usuario.objects.get(id=e.id_usuario_id)
+            tareas = Tarea.objects.get(id=e.id_tarea_id)
+            setattr(e, 'incharge', '{}'.format(user.nombre_completo))
+            setattr(e, 'tasktitle', '{}'.format(tareas.titulo))
+            setattr(e, 'taskdescription', '{}'.format(tareas.descripcion))
+            if tareas.completado:
+                setattr(e, 'isdone', 'Completado')
+            else:
+                setattr(e, 'isdone', 'No completado')
+
         if token == True:           
             return render(request, 'dash-tareas.html', {
-                'username': username,
+                'title': name,
+                'tasks': asignaciones,
             })
         else:
             return redirect('home')
@@ -247,17 +288,3 @@ class DashboardTeamProfileView(View):
             })
         else:
             return redirect('home')
-        
-class DashboardprojectTaskcompleteview(View):
-    nav = ''' a '''
-    def get(self, request):
-        token = request.session.get('is_validated', 'False')
-        username = request.session.get('username')
-        
-        if token == True:           
-            return render(request, 'dash-completar.html', {
-                'username': username,
-            })
-        else:
-            return redirect('home')
-

@@ -20,7 +20,7 @@
 # ---------------------------------------------------
 
 from django.urls import path
-from .views import HomeView, TeamView, ProfileView, LoginView, LogoutView, RegisterView, DashboardView, DashboardProfileView, DashboardProjectView, DashboardProjectTaskView, DashboardTeamView, DashboardTeamProfileView, DashboardprojectTaskcompleteview
+from .views import HomeView, TeamView, ProfileView, LoginView, LogoutView, RegisterView, DashboardView, DashboardProfileView, DashboardProjectView, DashboardProjectTaskView, DashboardTeamView, DashboardTeamProfileView,DashboardEditProfileView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
@@ -33,10 +33,10 @@ urlpatterns = [
 
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('dashboard/perfil', DashboardProfileView.as_view(), name='dash-perfil'),
+    path('dashboard/perfil/edit/', DashboardEditProfileView.as_view(), name='dash-perfil-edit'),
     path('dashboard/proyectos', DashboardProjectView.as_view(), name='dash-proyectos'),
-    path('dashboard/proyectos/tareas', DashboardProjectTaskView.as_view(), name='dash-proyectos-tareas'),
-    path('dashboard/proyectos/tareas/completar', DashboardprojectTaskcompleteview.as_view(), name='dash-tareas-completar'),
+    path('dashboard/proyectos/tareas/<str:name>', DashboardProjectTaskView.as_view(), name='dash-proyectos-tareas'),
+    # path('dashboard/proyectos/tareas/completar', DashboardprojectTaskcompleteview.as_view(), name='dash-tareas-completar'),
     path('dashboard/equipo', DashboardTeamView.as_view(), name='dash-equipo'),
     path('dashboard/equipo/profile', DashboardTeamProfileView.as_view(), name='dash-compañero'),
-    path('dashboard/actualizar/profile',DashboardProfileView.as_view(), name='dash-actualizar-profile'),
 ]

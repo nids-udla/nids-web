@@ -5,7 +5,7 @@
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
-          <h1 class="text-2xl font-bold mt-4">Bienvenido {{ username }}</h1>
+          <h1 class="text-2xl font-bold mt-4"> {{ title }}</h1>
           <p class="mt-2 text-sm text-gray-700">NIDS está diseñada para facilitar la comunicación y colaboración entre profesores y alumnos, fomentando un entorno educativo dinámico y enriquecedor. En ella, los profesores pueden crear proyectos y asignar tareas específicas a sus alumnos, mientras que los estudiantes tienen la responsabilidad de cumplir con esas tareas dentro de los plazos establecidos.</p>
         </div>
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -19,22 +19,26 @@
               <thead>
                 <tr>
                   <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Encargado</th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Titulo del proyecto</th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">estado</th>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Titulo</th>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Descripcion</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Estado</th>
                   <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-3">
                     <span class="sr-only">completar</span>
                   </th>
                 </tr>
               </thead>
               <tbody class="bg-white">
-                <tr class="even:bg-gray-50">
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">{{ username }}</td>
-                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Pagina Nids</td>
-                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Pendiente/completar</td>
-                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                    <a href="/dashboard/proyectos/tareas/completar" class="text-indigo-600 hover:text-indigo-900">Completar<span class="sr-only"></span></a>
-                  </td>
-                </tr>
+              {% for e in tasks %}
+              <tr class="even:bg-gray-50">
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.incharge }} </td>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.tasktitle }} </td>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.taskdescription }} </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{ e.isdone }} </td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                  <a href="/dashboard/proyectos/tareas/completar" class="text-indigo-600 hover:text-indigo-900">Completar<span class="sr-only"></span></a>
+                </td>
+              </tr>
+              {% endfor %}
               </tbody>
             </table>
           </div>
