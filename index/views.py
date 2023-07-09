@@ -180,7 +180,7 @@ class DashboardProfileView(View):
                 'area': area,
                 'description': description,
                 'email': email,
-                'telefono':telefono,
+                'telefono':telefono
             })
         else:
             return redirect('home')
@@ -199,22 +199,18 @@ class DashboardEditProfileView(View):
         
     def post(self, request):
         username = request.session.get('username')
+        print('///// ---> {}'.format(username))
         user = Usuario.objects.get(nombre_completo=username)
         nombre = request.POST['nombre']
-
-        numero= request.session.get('telefono')
-        user=Usuario.objects.get(telefono=numero)
-        telefono = request.POST['telefono']        
+        print('///// ---> {}'.format(user.nombre_completo))
+        user.nombre_completo = nombre
+        user.save()
 
         email = request.session.get('email')   
         user = Usuario.objects.get(email=email)
         gmail = request.POST['email']
         verificar=validaremail(gmail)
         if verificar is True:
-            user.nombre_completo = nombre
-            user.save()
-            user.telefono=telefono
-            user.save()            
             user.email=gmail
             user.save()           
             return redirect('dash-perfil')            
