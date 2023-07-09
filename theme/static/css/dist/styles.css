@@ -929,6 +929,16 @@ select {
   margin-top: 2rem;
 }
 
+<<<<<<< HEAD
+.line-clamp-4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+=======
+>>>>>>> 7abf2661654e7d85fbb5799ee93eeb7a54d4e1da
 .block {
   display: block;
 }
@@ -1356,6 +1366,10 @@ select {
 
 .whitespace-nowrap {
   white-space: nowrap;
+}
+
+.whitespace-pre-line {
+  white-space: pre-line;
 }
 
 .rounded {

@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from .login import validate, encrypt, verify
+from .login import validate, encrypt, verify,validaremail
 from .models import Usuario, Investigacion, Funcion, Rol, Area, Proyecto, Asignado, Tarea
 from django.contrib import messages
 
@@ -84,7 +84,9 @@ class LoginView(View):
             funcion = Funcion.objects.get(id_usuario=user.id)
             investigacion = Investigacion.objects.get(id_usuario=user.id)
             # Saving in session important properties.
+            request.session['email'] = user.email
             request.session['username'] = user.nombre_completo
+            request.session['telefono'] = user.telefono            
             request.session['about'] = user.descripcion
             request.session['rol'] = funcion.id_rol.nombre
             request.session['area'] = investigacion.id_area.nombre
@@ -146,6 +148,7 @@ class RegisterView(View):
 
             return redirect('/')
 
+
 class DashboardView(View):
     
     def get(self, request):
@@ -166,12 +169,18 @@ class DashboardProfileView(View):
         username = request.session.get('username')
         rol = request.session.get('rol')
         area = request.session.get('area')
+        description = request.session.get('about')
+        email = request.session.get('email')
+        telefono= request.session.get('telefono')
 
         if token == True:           
             return render(request, 'dash-profile.html', {
                 'username': username,
                 'rol': rol,
                 'area': area,
+                'description': description,
+                'email': email,
+                'telefono':telefono
             })
         else:
             return redirect('home')
@@ -191,15 +200,31 @@ class DashboardEditProfileView(View):
     def post(self, request):
         username = request.session.get('username')
         print('///// ---> {}'.format(username))
-
         user = Usuario.objects.get(nombre_completo=username)
         nombre = request.POST['nombre']
-        user.nombre_completo = nombre
-        user.save()
-        
         print('///// ---> {}'.format(user.nombre_completo))
 
-        return render(request, 'dash-edit-profile.html')
+        numero = request.session.get('telefono')
+        user = Usuario.objects.filter(telefono=numero)
+        telefono=request.POST['telefono']
+        
+        email = request.session.get('email')   
+        user = Usuario.objects.get(email=email)
+        gmail = request.POST['email']
+
+        verificar=validaremail(gmail)
+        if verificar is True:
+            user.email=gmail
+            user.save()
+            user.nombre_completo = nombre
+            user.save()
+            user.telefono=telefono
+            user.save()                   
+            return redirect('dash-perfil')            
+        else: 
+    
+            return redirect('dash-perfil-edit')          
+
         
 class DashboardProjectView(View):
     nav = ''' a '''
@@ -276,17 +301,3 @@ class DashboardTeamProfileView(View):
             })
         else:
             return redirect('home')
-        
-class DashboardprojectTaskcompleteview(View):
-    nav = ''' a '''
-    def get(self, request):
-        token = request.session.get('is_validated', 'False')
-        username = request.session.get('username')
-        
-        if token == True:           
-            return render(request, 'dash-completar.html', {
-                'username': username,
-            })
-        else:
-            return redirect('home')
-
