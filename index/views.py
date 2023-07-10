@@ -91,8 +91,8 @@ class LoginView(View):
             request.session['rol'] = funcion.id_rol.nombre
             request.session['area'] = investigacion.id_area.nombre
             # !!!! ---> Faltan los estudios.
-            request.session['socialsA'] = user.linkedin
-            request.session['socialsB'] = user.github
+            request.session['linkedin'] = user.linkedin
+            request.session['github'] = user.github
             # Creating the session access.
             request.session['is_validated'] = True
 
@@ -166,20 +166,27 @@ class DashboardProfileView(View):
     def get(self, request):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
-        rol = request.session.get('rol')
-        area = request.session.get('area')
-        description = request.session.get('about')
-        email = request.session.get('email')
-        telefono= request.session.get('telefono')
+
+        data = [
+            request.session.get('rol'),
+            request.session.get('area'),
+            request.session.get('about'),
+            request.session.get('email'),
+            request.session.get('telefono'),
+            request.session.get('linkedin'),
+            request.session.get('github'),
+        ]
 
         if token == True:           
             return render(request, 'dash-profile.html', {
                 'username': username,
-                'rol': rol,
-                'area': area,
-                'description': description,
-                'email': email,
-                'telefono':telefono
+                'rol': data[0],
+                'area': data[1],
+                'description': data[2],
+                'email': data[3],
+                'telefono':data[4],
+                'linkedin': data[5],
+                'github':data[6],
             })
         else:
             return redirect('home')
@@ -266,6 +273,7 @@ class DashboardProjectTaskView(View):
 
         if token == True:           
             return render(request, 'dash-tareas.html', {
+                'username': username,
                 'title': name,
                 'tasks': asignaciones,
             })
