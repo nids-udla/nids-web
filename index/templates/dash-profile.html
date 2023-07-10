@@ -31,6 +31,7 @@
       </tbody>
     </table>
     <form action='.' method='POST' class='grid grid-cols-2 grid-rows-3 gap-3'>
+      {% csrf_token %}
       <div>
         <p class='font-semibold'>Ingresa un nuevo correo o deja en blanco</p>
         <input 
@@ -51,7 +52,7 @@
         <p class='font-semibold'>Ingresa una nueva descripción o deja en blanco</p>
         <input 
         type="text" 
-        class= "px-4 py-2 bg-white mr-4 font-semibold w-full ring-1 ring-inset ring-orange-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600" 
+        class= "h-20 px-4 py-2 bg-white mr-4 font-semibold w-full ring-1 ring-inset ring-orange-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600" 
         placeholder="Descripción actual: {{ description }}"
         >
       </div>
