@@ -238,47 +238,7 @@ class DashboardProfileView(View):
     
             return redirect('dashboard')                                    
 
-        
-        
-class DashboardEditProfileView(View):
-    nav = ''' a '''    
-    def get(self, request):
-        token = request.session.get('is_validated', 'False')
-        
-        if token == True:           
-            return render(request, 'dash-edit-profile.html'
-
-            )
-        else:
-            return redirect('home')
-        
-    def post(self, request):
-        username = request.session.get('username')
-        print('///// ---> {}'.format(username))
-        user = Usuario.objects.get(nombre_completo=username)
-        nombre = request.POST['nombre']
-        print('///// ---> {}'.format(user.nombre_completo))
-
-        numero = request.session.get('telefono')
-        user = Usuario.objects.filter(telefono=numero)
-        telefono=request.POST['telefono']
-        
-        email = request.session.get('email')   
-        user = Usuario.objects.get(email=email)
-        gmail = request.POST['email']
-
-        verificar=validaremail(gmail)
-        if verificar is True:
-            user.email=gmail
-            user.save()
-            user.nombre_completo = nombre
-            user.save()
-            user.telefono=telefono
-            user.save()                   
-            return redirect('dash-perfil')            
-        else: 
-    
-            return redirect('dashboard')          
+              
         
 class DashboardProjectView(View):
     nav = ''' a '''
