@@ -311,3 +311,17 @@ class DashboardTeamProfileView(View):
             })
         else:
             return redirect('home')
+
+class DashboardAddnewTaskView(View):
+    nav = ''' a '''
+
+    def get(self, request):
+        token = request.session.get('is_validated', 'False')
+        username = request.session.get('username')
+        
+        if token == True:           
+            return render(request, 'dash-addtask.html', {
+                'username': username,
+            })
+        else:
+            return redirect('home')
