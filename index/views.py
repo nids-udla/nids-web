@@ -183,7 +183,7 @@ class DashboardView(View):
     
 class DashboardProfileView(View):
     nav = ''' a '''
-    
+
     def get(self, request):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
@@ -344,7 +344,9 @@ class DashboardTeamProfileView(View):
 class DashboardAddnewTaskView(View):
     nav = ''' a '''
 
-    def get(self, request):
+    def get(self, request, name):
+        print('///// ENTRA')
+
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
         
