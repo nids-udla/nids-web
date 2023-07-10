@@ -33,147 +33,64 @@
 {% endblock %}
 
 {% block stats %}
-    <div class="bg-white py-2 md:py-16">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="mx-auto max-w-2xl lg:max-w-none">
-                <div class="text-center">
-                    <h2 id="stats" class="text-4xl font-bold tracking-tight text-gray-900 mt-3">Nuestro avances en números </h2>
-                    <p class="mt-4 text-lg leading-8 text-gray-600">
-                        El crecimiento, rendimiento y logros de nuestro centro se resumen en las siguientes estadísticas de progreso.
-                    </p>
-                </div>
+    <div class="bg-white py-2 md:py-8">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:max-w-none">
+          <div class="text-center">
+            <h2 id="stats" class="text-4xl font-bold tracking-tight text-gray-900 mt-3">Nuestro avances en números </h2>
+            <p class="mt-4 text-lg leading-8 text-gray-600">
+                El crecimiento, rendimiento y logros de nuestro centro se resumen en las siguientes estadísticas de progreso.
+            </p>
+          </div>
 
-                <!-- Para vista monitor -->
-                <dl class="hidden md:flex-row md:place-content-center md:overflow-x-auto md:grid md:grid-cols-4 md:gap-0.5 md:rounded-2xl md:text-center md:shadow-lg">
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Investigadores Asociados</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">7</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Asistentes de Investigación</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">5</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Investigadores Externos Nacionales</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">12</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Investigadores Externos Internacionales</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">8</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Publicaciones Indexadas</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">+20</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Conferencias / Congresos</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">8</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Memoristas UDLA</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">2</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Practicantes UDLA</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">+10</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Vinculación con el Medio</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">4</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Proyectos con Fondos Internos adjudicación</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">3</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Co-tutorias de Memorias otras universidades</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">5</dd>
-                </div>
-                <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
-                    <dt class="text-sm font-semibold leading-6 text-gray-600">Participación en programas de Postgrado UDLA</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">2</dd>
-                </div>
-                </dl>
+            <!-- Para vista monitor -->
+          <dl class="hidden md:flex-row md:place-content-center md:overflow-x-auto md:grid md:grid-cols-4 md:gap-0.5 md:rounded-2xl md:text-center md:shadow-lg">
+            {% for stat in estadisticas %}
+              <div class="flex flex-col bg-gray-400/5 p-8 shadow-lg">
+                <dt class="text-sm font-semibold leading-6 text-gray-600"> {{ stat.titulo }} </dt>
+                <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600"> {{ stat.valor }} </dd>
+              </div>
+            {% endfor %}
+          </dl>
 
-                <!-- Para vista celular -->
-                <dl class="mt-6 flex flex-row overflow-x-auto snap-x gap-0.5 rounded-2xl text-center shadow-lg md:hidden">
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">7</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Investigadores Asociados</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">5</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Asistentes de Investigación</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">12</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Investigadores Externos Nacionales</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">8</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Investigadores Externos Internacionales</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">+20</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Publicaciones Indexadas</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">8</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Conferencias / Congresos</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">2</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Memoristas UDLA</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">+10</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Practicantes UDLA</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">4</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Vinculación con el Medio</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">3</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Proyectos con Fondos Internos adjudicación</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">5</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Co-tutorias de Memorias otras universidades</dt>
-                    </div>
-                    <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600">2</dd>
-                        <dt class="text-lg font-semibold leading-6 text-gray-600">Participación en programas de Postgrado UDLA</dt>
-                    </div>
-                </dl>
-            </div>
+            <!-- Para vista celular -->
+          <dl class="mt-6 flex flex-row overflow-x-auto snap-x gap-0.5 rounded-2xl text-center shadow-lg md:hidden">
+            {% for stat in estadisticas %}
+              <div class="grid grid-cols-1 bg-gray-400/5 p-8 min-w-[75%] shadow-lg place-content-center snap-center">
+                <dd class="order-first text-3xl font-semibold tracking-tight text-orange-600"> {{ stat.valor }} </dd>
+                <dt class="text-lg font-semibold leading-6 text-gray-600"> {{ stat.titulo }} </dt>
+              </div>
+            {% endfor %}
+          </dl>
         </div>
+      </div>
     </div> 
 {% endblock %}
 
 {% block news %}
-    <div class="bg-white py-24 sm:py-2">
+    <div class="bg-white py-24 sm:py-8">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:mx-0">
-        <h2 id="news" class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Ultimas noticias</h2>
-        <p class="mt-2 text-lg leading-8 text-gray-600">Learn how to grow your business with our expert advice.</p>
+      <div class="mx-auto lg:mx-0">
+        <h2 id="news" class="text-3xl text-center pb-3 font-bold tracking-tight text-gray-900 sm:text-4xl">Ultimas noticias</h2>
+        <p class="mt-4 text-lg text-center leading-8 text-gray-600"> Mantente al tanto de las útlimas participaciones, actividades y logros del Núcleo. </p>
       </div>
-      <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+      <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 border-t border-gray-200 sm:pt-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        {% for e in noticias %}
         <article class="flex max-w-xl flex-col items-start justify-between">
           <div class="flex items-center gap-x-4 text-xs">
-            <time datetime="2023-04-13" class="text-gray-500">Abril 13, 2023</time>
-            <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-orange-600 hover:bg-gray-100">Inauguración</a>
+            <time datetime="2023-04-13" class="text-gray-500"> {{ e.fecha_inicio }} </time>
+            <p class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-orange-600 hover:bg-gray-100"> {{ e.palabra_clave }} </p>
           </div>
           <div class="group relative">
             <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-              <a href="#">
+              <a target=blank_ href="/detnew/{{ e.titulo }}">
                 <span class="absolute inset-0"></span>
-                Inauguración de el Núcleo de Investigación de Data Sciense
+                {{ e.titulo }}
               </a>
             </h3>
-            <p class="mt-5 line-clamp-4 text-sm leading-6 text-gray-600">Con el propósito de promover la cultura de la investigación y fomentar la formación de redes de colaboración entre académicos de Universidad de Las Américas con pares de otras universidades, nacionales y extranjeras, es que este 2022, la Vicerrectoría de Investigación de UDLA dio a conocer los ganadores de la adjudicación del fondo concursable para la creación de Grupos y Núcleos.</p>
+            <p class="mt-5 line-clamp-4 text-sm leading-6 text-gray-600"> {{ e.descripcion }} </p>
           </div>
-          <div class="relative mt-8 flex items-center gap-x-4">
+          {% comment %} <div class="relative mt-8 flex items-center gap-x-4">
             <img src="https://actualidad.udla.cl/wp-content/uploads/sites/61/2022/01/Dante-37Travisany-scaled.jpg" alt="" class="h-10 w-14 rounded-full bg-gray-50">
             <div class="text-sm leading-6">
               <p class="font-semibold text-gray-900">
@@ -184,62 +101,9 @@
               </p>
               <p class="text-gray-600">Founder</p>
             </div>
-          </div>
+          </div> {% endcomment %}
         </article>
-        <article class="flex max-w-xl flex-col items-start justify-between">
-          <div class="flex items-center gap-x-4 text-xs">
-            <time datetime="2023-05-17" class="text-gray-500">Mayo 17, 2023</time>
-            <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-orange-600 hover:bg-gray-100">Inauguración</a>
-          </div>
-          <div class="group relative">
-            <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                Reforzando lazos de colaboración, autoridades de UDLA participan en la inauguración de Clínica Indisa Maipú: "Generará innumerables los beneficios a la comunidad estudiantil de UDLA"
-              </a>
-            </h3>
-            <p class="mt-5 line-clamp-4 text-sm leading-6 text-gray-600">“La apertura de este nuevo centro generará innumerables los beneficios a la comunidad estudiantil de UDLA, especialmente por la presencia que tenemos en la comuna. Esto, naturalmente nos significará grandes ventajas para estudiantes y académicos”, comentó Alejandro Zamorano.</p>
-          </div>
-          <div class="relative mt-8 flex items-center gap-x-4">
-            <img src="https://media.licdn.com/dms/image/C4D03AQEG8AQ3Yr5Tww/profile-displayphoto-shrink_800_800/0/1603114933924?e=2147483647&v=beta&t=U6VEihlAE1w-UQhCCvEqCGccneo9AGbXz7F1RTc16U0" alt="" class="h-10 w-10 rounded-full bg-gray-50">
-            <div class="text-sm leading-6">
-              <p class="font-semibold text-gray-900">
-                <a href="#">
-                  <span class="absolute inset-0"></span>
-                  Julia Ortiz
-                </a>
-              </p>
-              <p class="text-gray-600">Founder</p>
-            </div>
-          </div>
-        </article>
-        <article class="flex max-w-xl flex-col items-start justify-between">
-          <div class="flex items-center gap-x-4 text-xs">
-            <time datetime="2020-03-16" class="text-gray-500">Abril 13, 2023</time>
-            <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-orange-600 hover:bg-gray-100">Inauguración</a>
-          </div>
-          <div class="group relative">
-            <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                Inauguración de el Núcleo de Investigación de Data Sciense
-              </a>
-            </h3>
-            <p class="mt-5 line-clamp-4 text-sm leading-6 text-gray-600">Con el propósito de promover la cultura de la investigación y fomentar la formación de redes de colaboración entre académicos de Universidad de Las Américas con pares de otras universidades, nacionales y extranjeras, es que este 2022, la Vicerrectoría de Investigación de UDLA dio a conocer los ganadores de la adjudicación del fondo concursable para la creación de Grupos y Núcleos.</p>
-          </div>
-          <div class="relative mt-8 flex items-center gap-x-4">
-            <img src="https://actualidad.udla.cl/wp-content/uploads/sites/61/2022/01/Dante-37Travisany-scaled.jpg" alt="" class="h-10 w-14 rounded-full bg-gray-50">
-            <div class="text-sm leading-6">
-              <p class="font-semibold text-gray-900">
-                <a href="#">
-                  <span class="absolute inset-0"></span>
-                  Julia Ortiz
-                </a>
-              </p>
-              <p class="text-gray-600">Founder</p>
-            </div>
-          </div>
-        </article>
+        {% endfor %}
       </div>
     </div>
     </div>

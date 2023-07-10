@@ -29,7 +29,7 @@ class Usuario(models.Model):
     
 class Estadisticas(models.Model):
     titulo = models.CharField(max_length=100)
-    valor = models.IntegerField()
+    valor = models.CharField(max_length=100)
 
 class Tarea(models.Model):
     titulo = models.CharField(max_length=100)
@@ -55,6 +55,7 @@ class Noticia(models.Model):
     titulo = models.CharField(max_length=100)
     palabra_clave = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=300)
+    fecha_inicio = models.DateField(default=None)
 
 # -------------------------------------------
 
