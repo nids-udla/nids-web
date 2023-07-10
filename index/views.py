@@ -190,6 +190,34 @@ class DashboardProfileView(View):
             })
         else:
             return redirect('home')
+    def post(self,request):
+        email = request.session.get('email')
+        user_email = Usuario.objects.get(email=email)           
+        gmail = request.POST['email']
+        verificar=validaremail(gmail)
+
+        numero = request.session.get('telefono')
+        user_telefono = Usuario.objects.get(telefono=numero)
+        telefono=request.POST['telefono']
+
+        # description= request.session.get('about')
+        # user_descripcion=Usuario.objects.get(descripcion=description)
+        # descripcion= request.POST['descripcion']
+        # user_descripcion.descripcion= descripcion
+        # user_descripcion.save()          
+
+       
+        if verificar is True:
+            user_email.email= gmail
+            user_email.save() 
+            user_telefono.telefono= telefono
+            user_telefono.save()            
+            return redirect('dash-perfil')            
+        else: 
+    
+            return redirect('dashboard')                                    
+
+        
         
 class DashboardEditProfileView(View):
     nav = ''' a '''    
@@ -229,7 +257,7 @@ class DashboardEditProfileView(View):
             return redirect('dash-perfil')            
         else: 
     
-            return redirect('dash-perfil-edit')          
+            return redirect('dashboard')          
         
 class DashboardProjectView(View):
     nav = ''' a '''
