@@ -23,21 +23,48 @@
                   <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Descripcion</th>
                   <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Estado</th>
                   <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-3">
-                    <span class="sr-only">completar</span>
+                    <span class="sr-only">Completar</span>
                   </th>
                 </tr>
               </thead>
               <tbody class="bg-white">
               {% for e in tasks %}
-              <tr class="even:bg-gray-50">
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.incharge }} </td>
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.tasktitle }} </td>
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.taskdescription }} </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{ e.isdone }} </td>
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                  <a href="/dashboard/proyectos/tareas/completar" class="text-indigo-600 hover:text-indigo-900">Completar<span class="sr-only"></span></a>
-                </td>
-              </tr>
+                {% if e.isdone == 'No completado'%}
+                <tr class="even:bg-gray-50">
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.incharge }} </td>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.tasktitle }} </td>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.taskdescription }} </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{ e.isdone }} </td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                    <form action="{{ e.title }}" method="POST">
+                      {% csrf_token %}
+                      <input class="hidden" id="id" name="titulo" value="{{ e.tasktitle }}"></input>
+                      <button type='submit'> Cerrar tarea </button>
+                    </form>
+                  </td>
+                </tr>
+                {% endif %}
+              {% endfor %}
+              </tbody>
+            </table>
+            <table class="min-w-full divide-y divide-gray-300">
+              <tbody class="bg-white">
+              {% for e in tasks %}
+                {% if e.isdone == 'Completado'%}
+                <tr class="even:bg-gray-50">
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.incharge }} </td>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.tasktitle }} </td>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.taskdescription }} </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{ e.isdone }} </td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                    <form action="{{ e.title }}" method="POST">
+                      {% csrf_token %}
+                      <input class="hidden" id="id" name="titulo" value="{{ e.tasktitle }}"></input>
+                      <button type='submit'> Abrir tarea </button>
+                    </form>
+                  </td>
+                </tr>
+                {% endif %}
               {% endfor %}
               </tbody>
             </table>
@@ -48,3 +75,4 @@
     
 {% endblock %} 
 
+{% comment %} <a href="/dashboard/proyectos/tareas/completar" class="text-indigo-600 hover:text-indigo-900">Completar<span class="sr-only"></span></a> {% endcomment %}

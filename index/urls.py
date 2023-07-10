@@ -20,7 +20,7 @@
 # ---------------------------------------------------
 
 from django.urls import path
-from .views import HomeView, TeamView, ProfileView, LoginView, LogoutView, RegisterView, DashboardView, DashboardProfileView, DashboardProjectView, DashboardProjectTaskView, DashboardTeamView, DashboardTeamProfileView,DashboardEditProfileView
+from .views import HomeView, TeamView, ProfileView, LoginView, LogoutView, RegisterView, DashboardView, DashboardProfileView, DashboardProjectView, DashboardProjectTaskView, DashboardTeamView, DashboardTeamProfileView, DashboardEditProfileView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
