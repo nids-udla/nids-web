@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
 from .login import validate, encrypt, verify,validaremail
-from .models import Usuario, Investigacion, Funcion, Rol, Area, Proyecto, Asignado, Tarea
+from .models import Usuario, Investigacion, Funcion, Rol, Area, Proyecto, Asignado, Tarea, Noticia, Estadisticas
 from django.contrib import messages
 
 
@@ -14,8 +14,13 @@ class HomeView(View):
     '''
 
     def get(self, request):
+        estadisticas = Estadisticas.objects.all()
+        noticias = Noticia.objects.all()
+
         return render(request, 'gen-home.html', {
             'opt': self.nav,
+            'estadisticas': estadisticas,
+            'noticias': noticias,
         })
 
 class TeamView(View):
@@ -42,7 +47,7 @@ class ProfileView(View):
     nav = '''
         <!-- Menu mobil -->
         <a href="/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Inicio<span aria-hidden="true"></span></a>
-        <a href="/team" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
+        <a href="/team/" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
     '''
 
     def get(self, request, name):
@@ -57,7 +62,22 @@ class ProfileView(View):
             'user': user,
         })
 
-# Falta agregar una clase para el detalle de la noticia.
+class NewsViews(View):
+    nav = ''' 
+        <!-- Menu -->
+        <a href="/#stats" class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Estadísticas<span aria-hidden="true"></span></a>
+        <a href="/team/" target=blank_ class="px-4 text-sm font-semibold leading-6 text-gray-900 hover:text-orange-600">Equipo<span aria-hidden="true"></span></a>
+     '''
+
+    def get(self, request, title):
+        noticia = Noticia.objects.get(titulo=title)
+        noticias = Noticia.objects.all()
+
+        return render(request, 'equ-news.html', {
+            'opt': self.nav,
+            'noticia': noticia,
+            'noticias': noticias,
+        })
 
 class LoginView(View):
     nav = '''
@@ -163,6 +183,7 @@ class DashboardView(View):
     
 class DashboardProfileView(View):
     nav = ''' a '''
+
     def get(self, request):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
@@ -323,7 +344,9 @@ class DashboardTeamProfileView(View):
 class DashboardAddnewTaskView(View):
     nav = ''' a '''
 
-    def get(self, request):
+    def get(self, request, name):
+        print('///// ENTRA')
+
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
         

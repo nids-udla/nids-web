@@ -20,12 +20,13 @@
 # ---------------------------------------------------
 
 from django.urls import path
-from .views import HomeView, TeamView, ProfileView, LoginView, LogoutView, RegisterView, DashboardView, DashboardProfileView, DashboardProjectView, DashboardProjectTaskView, DashboardTeamView, DashboardTeamProfileView, DashboardEditProfileView, DashboardAddnewTaskView
+from .views import HomeView, TeamView, ProfileView, NewsViews, LoginView, LogoutView, RegisterView, DashboardView, DashboardProfileView, DashboardProjectView, DashboardProjectTaskView, DashboardTeamView, DashboardTeamProfileView, DashboardEditProfileView, DashboardAddnewTaskView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('team/', TeamView.as_view(), name='team'),
     path('team/<str:name>', ProfileView.as_view(), name='profile'),
+    path('detnew/<str:title>', NewsViews.as_view(), name='detnew'),
 
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
@@ -36,7 +37,7 @@ urlpatterns = [
     path('dashboard/perfil/edit/', DashboardEditProfileView.as_view(), name='dash-perfil-edit'),
     path('dashboard/proyectos', DashboardProjectView.as_view(), name='dash-proyectos'),
     path('dashboard/proyectos/tareas/<str:name>', DashboardProjectTaskView.as_view(), name='dash-proyectos-tareas'),
-    path('dashboard/proyectos/tareas/addtask', DashboardAddnewTaskView.as_view(), name='dash-añadir-tarea'),
+    path('dashboard/proyectos/tareas/<str:name>/addtask', DashboardAddnewTaskView.as_view(), name='dash-añadir-tarea'),
     path('dashboard/equipo', DashboardTeamView.as_view(), name='dash-equipo'),
     path('dashboard/equipo/profile', DashboardTeamProfileView.as_view(), name='dash-compañero'),
 ]
