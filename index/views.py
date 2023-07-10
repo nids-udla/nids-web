@@ -148,7 +148,6 @@ class RegisterView(View):
 
             return redirect('/')
 
-
 class DashboardView(View):
     
     def get(self, request):
@@ -224,7 +223,6 @@ class DashboardEditProfileView(View):
         else: 
     
             return redirect('dash-perfil-edit')          
-
         
 class DashboardProjectView(View):
     nav = ''' a '''
@@ -273,6 +271,18 @@ class DashboardProjectTaskView(View):
             })
         else:
             return redirect('home')
+        
+    def post(self, request, name):
+        titulo = request.POST['titulo']
+
+        tarea = Tarea.objects.get(titulo=titulo)
+        if tarea.completado is False:
+            tarea.completado = True
+        else:
+            tarea.completado = False
+        tarea.save(update_fields=['completado'])
+
+        return redirect ('dash-proyectos')
 
 class DashboardTeamView(View):
     nav = ''' a '''
