@@ -346,7 +346,7 @@ class DashboardAddnewTaskView(View):
     nav = ''' a '''
 
     def get(self, request, name):
-        print('///// ENTRASTE')
+        print('///// ENTRASTE /////')
 
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
@@ -357,22 +357,12 @@ class DashboardAddnewTaskView(View):
             })
         else:
             return redirect('home')
+        
     def post(self, request):
 
         titulo = request.POST['titulo']
         descripcion = request.POST['descripcion']
         fecha_inicio = request.POST['fecha_incio']
-        print('///// Me sirven los datos entregados')
 
-        verificacion = titulo, descripcion, fecha_inicio
-        
-        if verificacion == Tarea:
-            messages.add_message(request, messages.ERROR, 'Esta Tarea ya Existe')
-            return redirect('dash-añadir-tarea')
-        else:
-            titulo = request.POST['titulo']
-            descripcion = request.POST['descripcion']
-            fecha_inicio = request.POST['fecha_incio']
-
-
-        return redirect ('dash-proyectos-tareas')
+    
+        return redirect ('dash-añadir-tarea')
