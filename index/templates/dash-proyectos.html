@@ -2,40 +2,56 @@
 {% load static %}
 
 {% block projects %}
-<div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-  <div class="w-full mt-7 flex-col">
-    <h1 class="text-2xl font-bold mt-4">Proyectos</h1>
-    <div class="w-full mt-7">
-      <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {% for e in projects %}
-        <li class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
-          <div class="flex w-full items-center justify-between space-x-6 p-6">
-            <div class="flex-1 truncate">
-              <div class="flex items-center space-x-3">
-                <h3 class="truncate text-sm font-medium text-gray-900"> {{ e.titulo }} </h3>
+        {% if request.session.rol == 'Admin' %}
+            <form method="POST" action=".">
+              <h1 class="text-2xl font-bold mb-4">Nuevo Proyecto</h1>
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="encargado" class="text-gray-700">Nombre de proyecto:</label>
+                    <input type="text" id="encargado" class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="titulo" class="text-gray-700">Descripcion:</label>
+                    <input type="text" id="titulo" class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Enviar</button>
+                </div>
+            </form>
+        {% endif %}
+          <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+            <div class="w-full mt-7 flex-col">
+              <h1 class="text-2xl font-bold mt-4">Proyectos</h1>
+              <div class="w-full mt-7">
+                <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {% for e in projects %}
+                  <li class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
+                    <div class="flex w-full items-center justify-between space-x-6 p-6">
+                      <div class="flex-1 truncate">
+                        <div class="flex items-center space-x-3">
+                          <h3 class="truncate text-sm font-medium text-gray-900">{{ e.titulo }}</h3>
+                        </div>
+                        <p class="mt-1 truncate text-sm text-gray-500">{{ e.descripcion }}</p>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="-mt-px flex divide-x divide-gray-200">
+                        <div class="-ml-px flex w-0 flex-1">
+                          <a href="/dashboard/proyectos/tareas/{{ e.url }}" class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
+                            <svg class="h-5 w-5 text-gray-400 ml-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                              <img src="https://cdn-icons-png.flaticon.com/128/9297/9297201.png" class="h-5 w-5 text-gray-400" alt="Tareas">
+                            </svg>
+                            Tareas
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ul>
               </div>
-              <p class="mt-1 truncate text-sm text-gray-500"> {{ e.descripcion }} </p>
             </div>
           </div>
-          <div>
-            <div class="-mt-px flex divide-x divide-gray-200">
-              <div class="-ml-px flex w-0 flex-1">
-                <a href="/dashboard/proyectos/tareas/{{ e.url }}" class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border  border-transparent py-4 text-sm font-semibold text-gray-900">
-                  <svg class="h-5 w-5 text-gray-400 ml-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <img src="https://cdn-icons-png.flaticon.com/128/9297/9297201.png" class="h-5 w-5 text-gray-400">
-                  </svg>
-                    Tareas
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-</div>
-
 {% endblock %}  
 
   
