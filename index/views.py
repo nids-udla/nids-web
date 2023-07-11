@@ -211,46 +211,34 @@ class DashboardProfileView(View):
             })
         else:
             return redirect('home')
-        
-class DashboardEditProfileView(View):
-    nav = ''' a '''    
-    def get(self, request):
-        token = request.session.get('is_validated', 'False')
-        
-        if token == True:           
-            return render(request, 'dash-edit-profile.html'
-
-            )
-        else:
-            return redirect('home')
-        
-    def post(self, request):
-        username = request.session.get('username')
-        print('///// ---> {}'.format(username))
-        user = Usuario.objects.get(nombre_completo=username)
-        nombre = request.POST['nombre']
-        print('///// ---> {}'.format(user.nombre_completo))
+    def post(self,request):
+        email = request.session.get('email')
+        user_email = Usuario.objects.get(email=email)           
+        gmail = request.POST['email']
+        verificar=validaremail(gmail)
 
         numero = request.session.get('telefono')
-        user = Usuario.objects.filter(telefono=numero)
+        user_telefono = Usuario.objects.get(telefono=numero)
         telefono=request.POST['telefono']
-        
-        email = request.session.get('email')   
-        user = Usuario.objects.get(email=email)
-        gmail = request.POST['email']
 
-        verificar=validaremail(gmail)
+        # description= request.session.get('about')
+        # user_descripcion=Usuario.objects.get(descripcion=description)
+        # descripcion= request.POST['descripcion']
+        # user_descripcion.descripcion= descripcion
+        # user_descripcion.save()          
+
+       
         if verificar is True:
-            user.email=gmail
-            user.save()
-            user.nombre_completo = nombre
-            user.save()
-            user.telefono=telefono
-            user.save()                   
+            user_email.email= gmail
+            user_email.save() 
+            user_telefono.telefono= telefono
+            user_telefono.save()            
             return redirect('dash-perfil')            
         else: 
     
-            return redirect('dash-perfil-edit')          
+            return redirect('dashboard')                                    
+
+              
         
 class DashboardProjectView(View):
     nav = ''' a '''
