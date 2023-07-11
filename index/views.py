@@ -211,32 +211,45 @@ class DashboardProfileView(View):
             })
         else:
             return redirect('home')
-    def post(self,request):
-        email = request.session.get('email')
-        user_email = Usuario.objects.get(email=email)           
-        gmail = request.POST['email']
-        verificar=validaremail(gmail)
+    def post(self, request):
+        if 'email' in request.POST:
+            email = request.session.get('email')
+            user_email = Usuario.objects.get(email=email)
+            gmail = request.POST['email']
+            verificar = validaremail(gmail)
 
-        numero = request.session.get('telefono')
-        user_telefono = Usuario.objects.get(telefono=numero)
-        telefono=request.POST['telefono']
+            if verificar is True:
+                user_email.email = gmail
+                user_email.save()
+            else:
+                return redirect('dashboard')
 
-        # description= request.session.get('about')
-        # user_descripcion=Usuario.objects.get(descripcion=description)
-        # descripcion= request.POST['descripcion']
-        # user_descripcion.descripcion= descripcion
-        # user_descripcion.save()          
+        if 'telefono' in request.POST:
+            numero = request.session.get('telefono')
+            user_telefono = Usuario.objects.get(telefono=numero)
+            telefono = request.POST['telefono']
+            user_telefono.telefono = telefono
+            user_telefono.save()
 
-       
-        if verificar is True:
-            user_email.email= gmail
-            user_email.save() 
-            user_telefono.telefono= telefono
-            user_telefono.save()            
-            return redirect('dash-perfil')            
-        else: 
-    
-            return redirect('dashboard')                                    
+        if 'descripcion' in request.POST:
+            description = request.session.get('about')
+            user_descripcion = Usuario.objects.get(descripcion=description)
+            descripcion = request.POST['descripcion']
+            user_descripcion.descripcion = descripcion
+            user_descripcion.save()
+
+        if 'linkedin' in request.POST:
+            link = request.session.get('linkedin')
+            user_link = Usuario.objects.get(linkedin=link)
+            linkedin= request.POST['linkedin']
+            user_link.linkedin = linkedin
+            user_link.save()            
+
+        # Aquí puedes agregar más bloques if para manejar otros formularios
+
+        return redirect('dash-perfil')          
+
+                                         
 
               
         
