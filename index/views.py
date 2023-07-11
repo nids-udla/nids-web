@@ -245,7 +245,6 @@ class DashboardProfileView(View):
             user_link.linkedin = linkedin
             user_link.save()            
 
-        # Aquí puedes agregar más bloques if para manejar otros formularios
 
         return redirect('dash-perfil')          
 
