@@ -211,6 +211,7 @@ class DashboardProfileView(View):
             })
         else:
             return redirect('home')
+        
     def post(self,request):
         email = request.session.get('email')
         user_email = Usuario.objects.get(email=email)           
@@ -237,9 +238,7 @@ class DashboardProfileView(View):
         else: 
     
             return redirect('dashboard')                                    
-
-              
-        
+  
 class DashboardProjectView(View):
     nav = ''' a '''
 
@@ -265,6 +264,8 @@ class DashboardProjectTaskView(View):
     def get(self, request, name):
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
+
+        request.session['proyecto'] = name
 
         id_proyecto = Proyecto.objects.get(titulo=name)
         asignaciones = Asignado.objects.filter(id_proyecto=id_proyecto)
@@ -333,7 +334,10 @@ class DashboardAddnewTaskView(View):
     nav = ''' a '''
 
     def get(self, request, name):
-        print('///// ENTRASTE /////')
+        ref = request.headers['Referer']
+        url = '{}/addtask'.format(ref)
+
+        request.session['ref'] = ref
 
         token = request.session.get('is_validated', 'False')
         username = request.session.get('username')
@@ -341,15 +345,43 @@ class DashboardAddnewTaskView(View):
         if token == True:           
             return render(request, 'dash-addtask.html', {
                 'username': username,
+                'url': url,
             })
         else:
             return redirect('home')
         
-    def post(self, request):
-
+    def post(self, request, name):
+        encargado = request.POST['encargado']
         titulo = request.POST['titulo']
         descripcion = request.POST['descripcion']
-        fecha_inicio = request.POST['fecha_incio']
+        fecha_inicio = request.POST['fecha_inicio']
+        proyecto = request.session['proyecto']
 
-    
-        return redirect ('dash-añadir-tarea')
+        isTarea = Tarea.objects.check(titulo=titulo)
+
+        if isTarea:
+            return redirect (request.session['ref'])
+        else:
+            tarea = Tarea.objects.create(
+                titulo=titulo, 
+                descripcion=descripcion, 
+                completado=False, 
+                fecha_inicio=fecha_inicio
+                )
+            tarea.save()
+
+        id_usuario = Usuario.objects.get(nombre_completo=encargado)
+        id_proyecto = Proyecto.objects.get(titulo=proyecto)
+        id_tarea = Tarea.objects.get(titulo=titulo)
+
+        if id_usuario:
+            asignado = Asignado.objects.create(
+                id_usuario=id_usuario, 
+                id_proyecto=id_proyecto, 
+                id_tarea=id_tarea,
+                )
+            asignado.save()
+            return redirect (request.session['ref'])
+        else:
+            ref = request.session['ref']
+            return redirect ('{}/addtask'.format(ref))
