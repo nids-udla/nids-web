@@ -2,5 +2,49 @@
 {% load static %}
 
 {% block addtask %}
-<h1>Añadir tareas</h1>  
+<div class="max-w-md mx-auto my-4 bg-white p-5 rounded-md shadow-md">
+    <h1 class="text-2xl font-bold mb-4">Nueva Tarea</h1>
+    <form method="POST" action=".">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="encargado" class="text-gray-700">Nombre de encargado:</label>
+            <input type="text" id="encargado" class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+        </div>
+        <div class="mb-4">
+            <label for="titulo" class="text-gray-700">Título:</label>
+            <input type="text" id="titulo" class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+        </div>
+        <div class="mb-4">
+            <label for="descripcion" class="text-gray-700">Descripción:</label>
+            <textarea id="descripcion" class="block w-full px-4 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:border-blue-500"></textarea>
+        </div>
+        <div class="mb-4">
+            <label for="fecha_inicio" class="text-gray-700">Fecha de inicio:</label>
+            <input type="date" id="fecha_inicio" name="fechaInicio" class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+        </div>
+        <div class="flex justify-center">
+            <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Enviar</button>
+            <!-- <a href="#" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Enviar</a> -->
+        </div>
+    </form>
+</div>
+
+<script>
+    // Obtener el campo de fecha de inicio
+    var fechaInicioInput = document.getElementById("fecha_inicio");
+    
+    // Obtener la fecha actual
+    var fechaActual = new Date();
+    
+    // Establecer el valor predeterminado del campo de fecha de inicio
+    var mes = fechaActual.getMonth() + 1;
+    var dia = fechaActual.getDate();
+    var fechaFormato = fechaActual.getFullYear() + "-" + (mes < 10 ? "0" + mes : mes) + "-" + (dia < 10 ? "0" + dia : dia);
+    fechaInicioInput.value = fechaFormato;
+</script>
 {% endblock %}
+
+
+<!--label asociar con el input-->
+<!--textarea mas informacion no en solo una linea como el text-->
+<!--el for se debe asociar al id para que se entiendan o que espera-->
