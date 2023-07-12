@@ -213,7 +213,7 @@ class DashboardProfileView(View):
             return redirect('home')
         
     def post(self, request):
-        # if 'email' in request.POST:
+        if 'email' in request.POST:
             email = request.session.get('email')
             user_email = Usuario.objects.get(email=email)
             gmail = request.POST['email']
