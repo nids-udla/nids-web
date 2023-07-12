@@ -221,8 +221,10 @@ class DashboardProfileView(View):
             if verificar is True:
                 user_email.email = gmail
                 user_email.save()
+                return redirect('login')
             else:
-                return redirect('dashboard')
+                messages.error(request, 'Correo electrónico inválido.')
+                return redirect('dash-perfil')
 
         if 'telefono' in request.POST:
             numero = request.session.get('telefono')
@@ -243,7 +245,15 @@ class DashboardProfileView(View):
             user_link = Usuario.objects.get(linkedin=link)
             linkedin= request.POST['linkedin']
             user_link.linkedin = linkedin
-            user_link.save()            
+            user_link.save()
+
+        if 'github' in request.POST:
+            git = request.session.get('github')
+            user_git = Usuario.objects.get(github=git)
+            github= request.POST['github']
+            user_git.github = github
+            user_git.save()
+                              
 
 
         return redirect('dash-perfil')          
