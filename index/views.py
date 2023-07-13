@@ -224,11 +224,11 @@ class DashboardProfileView(View):
                 user_email.save()
                 return redirect('login')
             else:
-                messages.error(request, 'Correo electrónico inválido.')
+                messages.error(request, '¡Correo electrónico no existe!')
                 return redirect('dash-perfil')
 
         if 'telefono' in request.POST:
-            numero = request.session.get('telefono')
+            numero = request.session.get('telefono' )
             user_telefono = Usuario.objects.get(telefono=numero)
             telefono = request.POST['telefono']
             validar=validar_numero(telefono)
