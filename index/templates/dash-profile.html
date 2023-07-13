@@ -33,6 +33,7 @@
 
   </div>
   <div class="mx-5">
+    <!--mensaje gmail-->
     {% if messages %}
     <div class="my-4">
         {% for message in messages %}
@@ -41,6 +42,12 @@
         </div>
         {% endfor %}
     </div>
+    {% endif %}
+<!--mensaje telefono-->
+    {% if messages %}
+    <ul class="messages">        
+            {{ message }}
+    </ul>
     {% endif %}
     <div class="my-2">
       <form action="{% url 'dash-perfil'%}" method='POST' class='flex items-center' >

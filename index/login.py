@@ -2,6 +2,7 @@ import hashlib
 from .models import Usuario
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
+import re
 
 def verify(email):
     find = Usuario.objects.get(email=email)
@@ -31,13 +32,30 @@ def validate(email, password):
             return False
     else:
         return None
-
+# funcion para validar email para editar el perfil
 def validaremail(email):
     validar = EmailValidator()
     try:
         validar(email)
         return True
     except ValidationError:
+        return False
+
+# funcion para validar el numero para editar el perfil
+def validar_numero(telefono):
+    patron = r'^\d{9}$'
+    if re.match(patron, telefono):
+        return True
+    else:
+        return False
+
+# funcion para validar la url de Github
+
+def validar_github(github):
+    patron = r'^https:\/\/github\.com\/[a-zA-Z0-9-]+$'
+    if re.match(patron, github):
+        return True
+    else:
         return False
     
 # ------------------------------------------------------------------------

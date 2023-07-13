@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from .login import validate, encrypt, verify,validaremail
+from .login import validate, encrypt, verify,validaremail,validar_numero,validar_github
 from .models import Usuario, Investigacion, Funcion, Rol, Area, Proyecto, Asignado, Tarea, Noticia, Estadisticas
 from django.contrib import messages
 
@@ -231,8 +231,15 @@ class DashboardProfileView(View):
             numero = request.session.get('telefono')
             user_telefono = Usuario.objects.get(telefono=numero)
             telefono = request.POST['telefono']
-            user_telefono.telefono = telefono
-            user_telefono.save()
+            validar=validar_numero(telefono)
+            if validar is True:
+                user_telefono.telefono = telefono
+                user_telefono.save()
+                messages.success(request, '¡El número de teléfono se ha actualizado correctamente!')
+                return redirect('dash-perfil')
+            else:
+                messages.error(request, 'ingrese un numero de telefono valido')
+                return redirect('dash-perfil')
 
         if 'descripcion' in request.POST:
             description = request.session.get('about')
@@ -240,6 +247,23 @@ class DashboardProfileView(View):
             descripcion = request.POST['descripcion']
             user_descripcion.descripcion = descripcion
             user_descripcion.save()
+            messages.success(request, '¡La descripcion se ha actualizado correctamente!')
+
+        if 'github' in request.POST:
+            git = request.session.get('github')
+            user_git = Usuario.objects.get(github=git)
+            github= request.POST['github']
+            validar_git=validar_github(github)
+            
+            if validar_git is True:
+                user_git.github = github
+                user_git.save()
+                messages.success(request, '¡El Github se ha actualizado correctamente!')
+                return redirect('dash-perfil')
+            else:
+                messages.error(request, 'ingrese una direccion de github valida')
+                return redirect('dash-perfil')                   
+        
 
         if 'linkedin' in request.POST:
             link = request.session.get('linkedin')
@@ -247,14 +271,8 @@ class DashboardProfileView(View):
             linkedin= request.POST['linkedin']
             user_link.linkedin = linkedin
             user_link.save()
-
-        if 'github' in request.POST:
-            git = request.session.get('github')
-            user_git = Usuario.objects.get(github=git)
-            github= request.POST['github']
-            user_git.github = github
-            user_git.save()
-                              
+            messages.success(request, '¡El linkedin se ha actualizado correctamente!')
+                           
 
 
         return redirect('dash-perfil')          
